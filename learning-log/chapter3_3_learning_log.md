@@ -13,6 +13,7 @@
 - Optional
 
 など、これまで以上に多くの概念が同時に登場した。
+
 特に今回は、
 
 - 「Javaだけで完結しない」
@@ -20,6 +21,7 @@
 - 「DBという外部システムが追加された」
 
 という点で難易度が一気に上がった。
+
 そのため今回も、
 
 - 用語
@@ -36,6 +38,7 @@
 ## ◆ ビジネスロジック
 
 業務に必要な処理。
+
 より具体的には、「そのシステムが現実世界で何を解決したいのか」に対応する処理である。
 
 例：銀行システムの場合
@@ -67,8 +70,10 @@ Service：
 - 判定
 
 つまり、
-Controller = 受付  
-Service = 本処理
+
+- Controller = 受付  
+- Service = 本処理
+
 という役割分担になっている。
 
 ---
@@ -131,6 +136,7 @@ Spring Bootは、設定を書かなくてもデフォルト値で動く部分が
 - 特殊設定なし
 
 だったため、設定不要だった。
+
 しかし今回は：
 
 - H2 Database使用
@@ -144,7 +150,9 @@ Spring Bootは、設定を書かなくてもデフォルト値で動く部分が
 ## ◆ JDBCドライバ
 
 JavaとDBの通訳。
+
 DB製品ごとに通信方法が違うため、専用ドライバが必要になる。
+
 今回使用するorg.h2.DriverはH2用ドライバ。
 
 ---
@@ -154,14 +162,17 @@ DB製品ごとに通信方法が違うため、専用ドライバが必要にな
 メモリ上で動くDB。
 
 特徴：
+
 - 高速
 - 再起動で消える
 
 通常DB：
+
 - HDD / SSD保存
 - 消えない
 
 インメモリDB：
+
 - RAM保存
 - 消える
 
@@ -170,9 +181,11 @@ DB製品ごとに通信方法が違うため、専用ドライバが必要にな
 ## ◆ 組み込みデータベース
 
 アプリ内部に組み込まれているDB。
+
 今回の場合、Spring Bootアプリ内にH2が含まれている。
 
 特徴は：
+
 - インストール不要
 - すぐ使える
 - 学習向け
@@ -181,23 +194,30 @@ DB製品ごとに通信方法が違うため、専用ドライバが必要にな
 である。
 
 通常のDBは：
+
 - MySQL
 - PostgreSQL
 
 などを別途インストールする必要がある。
+
 しかしH2は、Spring Bootアプリ内に最初から含まれているため、環境構築が非常に簡単。
+
 また今回はインメモリ型DBでもあるため、
 
 - Spring Boot再起動
+  
 ↓
+
 - DB再作成
 - テーブル再作成
 - 初期データ再投入
 
 が毎回自動実行される。
+
 つまり、UPDATE / DELETE / INSERTなどでデータを壊しても、再起動すれば元に戻る。
 
 そのため、
+
 - 学習中に気軽に試せる
 - テストデータを何度でも初期化できる
 
@@ -208,6 +228,7 @@ DB製品ごとに通信方法が違うため、専用ドライバが必要にな
 ## ◆ classpath:
 
 Spring Bootでは、src/main/resources を classpath として扱う。
+
 つまり、classpath:schema.sql は src/main/resources/schema.sql を意味する。
 
 ---
@@ -215,16 +236,19 @@ Spring Bootでは、src/main/resources を classpath として扱う。
 ## ◆ SQLによる初期化
 
 Spring Boot起動時に：
+
 1. テーブル作成
 2. データ投入
 
 を自動実行する仕組み。
 つまり、
+
 - UPDATE
 - DELETE
 - INSERT
 
 でデータを変更しても、再起動すると：
+
 - schema.sql
 - data.sql
 
@@ -245,10 +269,13 @@ URL：http://localhost:8080/h2-console
 getter / setterなどを自動生成するライブラリ。
 
 通常：
+
 public String getName()
+
 などを自分で書く必要がある。
 
 しかしLombokでは：
+
 @Dataを付けるだけで自動生成される。
 
 ---
@@ -258,6 +285,7 @@ public String getName()
 Lombokのアノテーション。
 
 自動生成されるもの：
+
 - getter
 - setter
 - toString
@@ -269,6 +297,7 @@ Lombokのアノテーション。
 ## ◆ @Id
 
 「このフィールドが主キーである」ことを示すアノテーション。
+
 今回は private String id; が主キー。
 
 ---
@@ -276,7 +305,9 @@ Lombokのアノテーション。
 ## ◆ CrudRepository
 
 Spring Dataが用意しているインタフェース。
+
 継承するだけで：
+
 - Create
 - Read
 - Update
@@ -289,6 +320,7 @@ Spring Dataが用意しているインタフェース。
 ## ◆ CRUD
 
 データベース操作における
+
 - Create → 作成
 - Read → 取得
 - Update → 更新
@@ -303,7 +335,9 @@ Spring Dataが用意しているインタフェース。
 IDで1件取得するメソッド。
 
 sampleRepository.findById(id)
+
 だと、内部では、 SELECT * FROM sample WHERE id = ?;
+
 のようなSQLが生成される。
 
 ---
@@ -313,33 +347,42 @@ sampleRepository.findById(id)
 「値があるかもしれない箱」。
 
 重要なのは：
+
 - データがあるとは限らない
 - null安全のために存在する
 
 という点。
 
 今回のコード：
+
     Optional<Sample> optionalSample
         = sampleRepository.findById(id);
 
 では、
+
 - 指定したIDのデータが存在する場合
 - 存在しない場合
+  
 の両方があり得る。
 
 findById("1")ならデータが見つかるかもしれないが、
+
 findById("999")なら存在しない可能性がある。
+
 そのため、findById()は直接Sampleを返すのではなく、Optional<Sample> という「存在するかもしれない箱」を返している。
 
 ### ■ イメージ
 
 データあり：[ Sample ]
+
 データなし：[ 空 ]
 
 重要なのは、「データが見つからなかった可能性」をOptionalで表現している点である。
 
 もしOptionalを使わず直接Sampleを返す場合、データが存在しなかった時はnullを返すしかなくなる。
+
 しかしnullは：
+
 - NullPointerException
 - nullチェック漏れ
 
@@ -354,10 +397,12 @@ findById("999")なら存在しない可能性がある。
 ### ■ 理解したこと
 
 ID検索では：
+
 - 見つかる場合
 - 見つからない場合
 
 の両方がある。そのため、「存在しない可能性」を表現する必要がある。
+
 そこで Optional が使われている。
 
 ---
@@ -365,12 +410,15 @@ ID検索では：
 ## 【疑問③】Optional が空だったらどうなるのか？
 
 コード：optionalSample.get();
+
 を見た時、「空ならどうなるのか？」が疑問だった。
 
 ### ■ 理解したこと
 
 Optional.empty の状態で get() を呼ぶと例外になる。
+
 つまり：
+
     Optional.empty
     ↓
     get()
@@ -384,6 +432,7 @@ Optional.empty の状態で get() を呼ぶと例外になる。
 ## ◆ @Service
 
 「このクラスはServiceです」とSpringに登録するためのアノテーション。
+
 自動生成する機能ではなく、役割を示す目印。
 
 ---
@@ -391,13 +440,17 @@ Optional.empty の状態で get() を呼ぶと例外になる。
 ## ◆ @Autowired
 
 DI（依存性注入）のためのアノテーション。
+
 現時点では、「Springが必要なインスタンスを自動で入れてくれる」程度で理解しておけば十分。
 
 例：
+
     @Autowired
     private SampleRepository sampleRepository;
+    
 ↓
 イメージ：
+
     private SampleRepository sampleRepository
         = （Springが用意したもの）
 
@@ -409,30 +462,44 @@ DI（依存性注入）のためのアノテーション。
 ### 例
 
 HTML： <input type="text" name="id">
+
 ↓
+
 Controller：@RequestParam("id") String id
 
 重要ポイント：
+
 - "id" → HTML側の名前
 - String id → Java変数
 
 つまり、HTML側で入力された値を、 name="id" という名前で送信し、
+
 Controller側で、 @RequestParam("id") を使って取り出している。
+
 その後、 String id というJava変数に代入される。
 
 イメージ：
+
 入力された値
+
 ↓
+
 name="id" の箱に入る
+
 ↓
+
 @RequestParam("id") で取り出す
+
 ↓
+
 String id に代入
 
 なお、@RequestParam("a") String b の場合、
+
 <input type="text" name="a"> で送られた値が、b という変数に入る。
 
 つまり重要なのは、
+
 - HTML側のname
 - @RequestParam("")
 
@@ -443,14 +510,17 @@ String id に代入
 ## ◆ Model
 
 HTMLにデータを渡すための箱。
+
 Controllerで取得したデータは、そのままではHTML側から見えない。
 
-例えば
-Sample sample = sampleService.getSample(id);
+例えば, Sample sample = sampleService.getSample(id);
+
 で取得したsample変数は、Controller内部のローカル変数であり、HTML側から直接アクセスできない。
 
 そのため、
+
 model.addAttribute("sample", sample);
+
 を使って、HTML側にデータを渡す必要がある。
 
 ### ■ addAttribute の意味
@@ -459,24 +529,34 @@ model.addAttribute("sample", sample);
 - sample → Javaのデータ（Sampleインスタンス）
 
 つまり、
+
 model.addAttribute("sample", sample);
+
 は、「sampleという名前でSampleデータをHTMLに渡す」という意味になる。
 
 その後、Thymeleaf側では：
+
     ${sample.id}
     ${sample.str}
 
 のように取得できる。
 
 ここでの：${sample}は、
+
 model.addAttribute("sample", sample);
+
 の第一引数 "sample" を指している。
 
 つまり流れとしては：
+
 Java側：model.addAttribute("sample", sample);
+
 ↓
+
 Modelの中："sample" → Sampleデータ
+
 ↓
+
 HTML側：${sample.id}
 
 という対応関係になっている。
@@ -488,9 +568,11 @@ HTML側：${sample.id}
 最初は、「sample変数をそのままHTMLで使えないのか？」と思った。
 
 実際、
+
 return "hello/db"; だけでも画面自体は表示される。
 
 しかし、Modelにデータ登録していないため、
+
 ${sample.id} などが取得できず、画面には何も表示されない。
 
 ---
@@ -500,6 +582,7 @@ ${sample.id} などが取得できず、画面には何も表示されない。
 例：<td th:text="${sample.id}"></td>
 
 意味：
+
 - sample → Modelのキー名
 - id → Sampleクラスのフィールド
 
