@@ -461,49 +461,71 @@ DI（依存性注入）のためのアノテーション。
 
 ### 例
 
-HTML： <input type="text" name="id">
+HTML：
+
+    <input type="text" name="id">
 
 ↓
 
-Controller：@RequestParam("id") String id
+Controller：
+
+    @RequestParam("id") String id
 
 重要ポイント：
 
 - "id" → HTML側の名前
 - String id → Java変数
 
-つまり、HTML側で入力された値を、 name="id" という名前で送信し、
+つまり、HTML側で入力された値を、
 
-Controller側で、 @RequestParam("id") を使って取り出している。
+    name="id"
 
-その後、 String id というJava変数に代入される。
+という名前で送信し、
 
-イメージ：
+Controller側で、
+
+    @RequestParam("id")
+
+を使って取り出している。
+
+その後、
+
+    String id
+
+というJava変数に代入される。
+
+### イメージ
 
 入力された値
-
 ↓
-
 name="id" の箱に入る
-
 ↓
-
 @RequestParam("id") で取り出す
-
 ↓
-
 String id に代入
 
-なお、@RequestParam("a") String b の場合、
+なお、
 
-<input type="text" name="a"> で送られた値が、b という変数に入る。
+    @RequestParam("a") String b
+
+の場合、
+
+    <input type="text" name="a">
+
+で送られた値が、
+
+    b
+
+という変数に入る。
 
 つまり重要なのは、
 
 - HTML側のname
 - @RequestParam("")
 
-が一致していることであり、Java側の変数名は自由につけられる。
+が一致していること
+
+であり、Java側の変数名は自由につけられる。
 
 ---
 
@@ -513,13 +535,15 @@ HTMLにデータを渡すための箱。
 
 Controllerで取得したデータは、そのままではHTML側から見えない。
 
-例えば, Sample sample = sampleService.getSample(id);
+例えば、
+
+    Sample sample = sampleService.getSample(id);
 
 で取得したsample変数は、Controller内部のローカル変数であり、HTML側から直接アクセスできない。
 
 そのため、
 
-model.addAttribute("sample", sample);
+    model.addAttribute("sample", sample);
 
 を使って、HTML側にデータを渡す必要がある。
 
@@ -530,9 +554,13 @@ model.addAttribute("sample", sample);
 
 つまり、
 
-model.addAttribute("sample", sample);
+    model.addAttribute("sample", sample);
 
-は、「sampleという名前でSampleデータをHTMLに渡す」という意味になる。
+は、
+
+「sampleという名前でSampleデータをHTMLに渡す」
+
+という意味になる。
 
 その後、Thymeleaf側では：
 
@@ -541,52 +569,80 @@ model.addAttribute("sample", sample);
 
 のように取得できる。
 
-ここでの：${sample}は、
+ここでの：
 
-model.addAttribute("sample", sample);
+    ${sample}
+
+は、
+
+    model.addAttribute("sample", sample);
 
 の第一引数 "sample" を指している。
 
-つまり流れとしては：
+### 流れ
 
-Java側：model.addAttribute("sample", sample);
+Java側：
 
-↓
-
-Modelの中："sample" → Sampleデータ
+    model.addAttribute("sample", sample);
 
 ↓
 
-HTML側：${sample.id}
+Modelの中：
+
+    "sample" → Sampleデータ
+
+↓
+
+HTML側：
+
+    ${sample.id}
 
 という対応関係になっている。
 
 ---
 
-##【疑問④】Modelがないとどうなる？
+## 【疑問④】Modelがないとどうなる？
 
-最初は、「sample変数をそのままHTMLで使えないのか？」と思った。
+最初は、
+
+「sample変数をそのままHTMLで使えないのか？」
+
+と思った。
 
 実際、
 
-return "hello/db"; だけでも画面自体は表示される。
+    return "hello/db";
+
+だけでも画面自体は表示される。
 
 しかし、Modelにデータ登録していないため、
 
-${sample.id} などが取得できず、画面には何も表示されない。
+    ${sample.id}
+
+などが取得できず、画面には何も表示されない。
 
 ---
 
 ## ◆ Thymeleafでの表示
 
-例：<td th:text="${sample.id}"></td>
+例：
+
+    <td th:text="${sample.id}"></td>
 
 意味：
 
 - sample → Modelのキー名
 - id → Sampleクラスのフィールド
 
-つまり: ${sample.id} は、「Modelからsampleを取り出し、その中のidを表示する」という意味になる。
+つまり、
+
+    ${sample.id}
+
+は、
+
+「Modelからsampleを取り出し、その中のidを表示する」
+
+という意味になる。
 
 ---
 
