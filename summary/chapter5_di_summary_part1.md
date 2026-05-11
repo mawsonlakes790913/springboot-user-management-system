@@ -367,164 +367,383 @@ Spring起動時に1個生成し共有する。
 
 ---
 
-# ■ Spring Web MVC専用スコープ
+# ■ 5-3 DIサンプル作成
 
-## ◆ request
+論理的な説明だけでなく、実際にSpring Boot上でDIを利用したサンプルアプリケーションを作成した。
 
-HTTPリクエスト単位。
+この章では主に：
 
----
+1. Beanの切り替え（簡易版）
+2. Beanライフサイクル確認
 
-## ◆ session
-
-セッション単位。
-
----
-
-## ◆ application
-
-Webアプリ全体共有。
+を行った。
 
 ---
 
-## ◆ websocket
+# ■ 1. Beanの切り替え（簡易版）
 
-WebSocket接続単位。
+## ◆ 目的
 
----
+同じインターフェースを実装したBeanが複数存在する場合に、
 
-# ■ 5-2 DIを使った実装方法
+```text
+どのBeanをDIするか
+```
 
-DI実装には主に：
-
-1. アノテーション方式
-2. JavaConfig方式
-
-がある。
+を切り替える方法を確認した。
 
 ---
 
-# ■ フィールドインジェクション
+## ◆ SampleComponentインターフェース
+
+```java
+package com.example.demo.di;
+
+public interface SampleComponent {
+
+    public String getStr();
+
+}
+```
+
+役割だけを定義したインターフェース。
+
+---
+
+## ◆ 実装クラス①
+
+```java
+package com.example.demo.di;
+
+import org.springframework.stereotype.Component;
+
+@Component("SampleComponent1")
+public class SampleComponent1
+    implements SampleComponent {
+
+    private String str
+        = "SampleComponent1";
+
+    @Override
+    public String getStr() {
+
+        return this.str;
+    }
+}
+```
+
+---
+
+## ◆ 実装クラス②
+
+```java
+package com.example.demo.di;
+
+import org.springframework.stereotype.Component;
+
+@Component("SampleComponent2")
+public class SampleComponent2
+    implements SampleComponent {
+
+    private String str
+        = "SampleComponent2";
+
+    @Override
+    public String getStr() {
+
+        return this.str;
+    }
+}
+```
+
+---
+
+## ◆ Bean名
+
+```java
+@Component("SampleComponent1")
+```
+
+のように、
+
+@Componentの引数へ文字列を渡すことでBean名を設定できる。
+
+同じインターフェース実装クラスが複数存在する場合、
+Bean名が異なることでIoCコンテナへ登録可能になる。
+
+---
+
+## ◆ HelloControllerでDI
 
 ```java
 @Autowired
-private HogeComponent hogeComponent;
+@Qualifier("SampleComponent1")
+private SampleComponent sampleComponent;
 ```
 
-特徴：
+@Qualifierを使うことで：
 
-- 記述が短い
+```text
+どのBeanをDIするか
+```
+
+を明示的に指定した。
 
 ---
 
-# ■ コンストラクタインジェクション
+## ◆ ログ出力確認
 
 ```java
-private final HogeComponent hogeComponent;
+@GetMapping("/hello")
+public String getHello() {
 
+    log.info(
+        sampleComponent.getStr()
+    );
+
+    return "hello";
+}
+```
+
+ブラウザから：
+
+```text
+http://localhost:8080/hello
+```
+
+へアクセスすると、
+
+```text
+SampleComponent1
+```
+
+がログへ出力された。
+
+---
+
+## ◆ Bean切り替え確認
+
+```java
+@Qualifier("SampleComponent1")
+```
+
+を：
+
+```java
+@Qualifier("SampleComponent2")
+```
+
+へ変更して保存すると、
+Spring Boot DevToolsによって自動再起動された。
+
+再度アクセスすると：
+
+```text
+SampleComponent2
+```
+
+がログへ出力された。
+
+これにより：
+
+```text
+DI対象Beanを切り替えられる
+```
+
+ことを確認した。
+
+---
+
+# ■ @Slf4j
+
+## ◆ LombokによるLogger生成
+
+```java
+@Slf4j
+```
+
+をクラスへ付与すると、
+
+```java
+private static final Logger log =
+    LoggerFactory.getLogger(
+        HelloController.class
+    );
+```
+
+相当のコードが自動生成される。
+
+---
+
+## ◆ log.info()
+
+```java
+log.info(sampleComponent.getStr());
+```
+
+は：
+
+```text
+INFOレベルログ
+```
+
+を出力する。
+
+ログレベル例：
+
+| レベル | 用途 |
+|---|---|
+| error | エラー |
+| warn | 警告 |
+| info | 一般情報 |
+| debug | デバッグ用 |
+
+---
+
+# ■ 2. Beanライフサイクル確認
+
+## ◆ 目的
+
+Beanが：
+
+- いつ生成されるか
+- いつ破棄されるか
+
+をログで確認した。
+
+---
+
+## ◆ singletonスコープ
+
+デフォルトでは：
+
+```text
+singleton
+```
+
+スコープとなる。
+
+これは：
+
+```text
+Spring起動時に1回だけ生成
+```
+
+され、
+
+```text
+アプリケーション全体で共有
+```
+
+されることを意味する。
+
+---
+
+## ◆ prototypeスコープ
+
+```java
+@Scope("prototype")
+```
+
+を指定すると、
+
+```text
+Bean取得のたびに新規生成
+```
+
+される。
+
+---
+
+## ◆ ライフサイクル管理
+
+IoCコンテナは：
+
+- インスタンス生成
+- 保持
+- 破棄
+
+を自動管理する。
+
+これを：
+
+```text
+ライフサイクル管理
+```
+
+という。
+
+---
+
+## ◆ singletonの特徴
+
+singletonでは：
+
+```text
+同じインスタンスを共有
+```
+
+する。
+
+例えば：
+
+```java
 @Autowired
-public Hoge(
-    HogeComponent hogeComponent
-) {
-
-    this.hogeComponent
-        = hogeComponent;
-}
+private UserService userService;
 ```
 
-特徴：
+を複数クラスで使用しても、
 
-- final化可能
-- Spring推奨
+内部的には：
 
----
-
-# ■ Lombok
-
-## ◆ @RequiredArgsConstructor
-
-コンストラクタ自動生成。
-
-```java
-@RequiredArgsConstructor
+```text
+同じUserServiceインスタンス
 ```
 
----
-
-# ■ Setterインジェクション
-
-```java
-@Autowired
-public void setHogeComponent(
-    HogeComponent hogeComponent
-) {
-
-    this.hogeComponent
-        = hogeComponent;
-}
-```
-
-setter経由でDIする。
+が使われる。
 
 ---
 
-# ■ JavaConfig
+# ■ 5章で学習した重要ポイント
 
-## ◆ JavaConfig
-
-Bean生成専用クラス。
-
-```java
-@Configuration
-public class JavaConfig {
-}
-```
-
----
-
-## ◆ @Bean
-
-```java
-@Bean
-public Hoge getHoge() {
-
-    return new Hoge();
-}
-```
-
-戻り値をBean登録する。
-
----
-
-# ■ JavaConfigを使う場面
-
-主に：
-
-- 外部ライブラリ
-- 複雑生成
-- 特殊設定
-
-など。
-
----
-
-# ■ 最終まとめ
-
-第5章では、
+第5章では：
 
 - DI
 - IoCコンテナ
 - Bean
 - 疎結合
-- スコープ
 - @Autowired
+- @Qualifier
+- Bean切り替え
+- スコープ
+- Beanライフサイクル
+- @Slf4j
+- AOP
 
-など、Springの根幹機能を学習した。
+など、Springの土台となる重要概念を学習した。
 
-また、
+また、この章では：
 
-- インターフェース設計
-- 疎結合
-- オブジェクト管理
+```text
+自分でnewしない
+```
 
-など、Spring以前のオブジェクト指向設計についても理解する章だった。
+というSpring特有の考え方が非常に重要だった。
+
+開発者は：
+
+```java
+@Autowired
+private UserService userService;
+```
+
+のように必要な型だけ宣言し、
+
+実際の：
+
+- インスタンス生成
+- 保持
+- 注入
+- 管理
+
+はSpring IoCコンテナが担当する。
