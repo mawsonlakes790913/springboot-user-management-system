@@ -151,6 +151,39 @@ SignupFormオブジェクト
 └──────────────────────────────┘
 ```
 
+画面の各入力欄は、
+SignupFormクラス内の各フィールドへ対応している。
+
+Springは：
+
+- フォームのname属性
+- Javaフィールド名
+
+を対応付けることで、
+入力値を自動的にJavaオブジェクトへ格納する。
+
+例えば：
+
+```text
+name="userId"
+```
+
+という入力欄なら、
+
+```java
+private String userId;
+```
+
+へ値が代入される。
+
+これが：
+
+```text
+バインド（Binding）
+```
+
+である。
+
 ---
 
 ## ◆ @DateTimeFormat
