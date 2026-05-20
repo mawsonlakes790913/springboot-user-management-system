@@ -1,239 +1,556 @@
-# 第1章まとめ：SpringとSpring Boot
+# 第1章まとめ：SpringとSpring Bootの関係
 
 ## ■ 概要
-- アプリケーション開発では、ビジネスの成長に伴い機能が増加し、  
-  データベース・セキュリティ・クラウド対応など多くの要素が必要になる
-- これらをすべてゼロから開発するのは非効率
 
-→ そこで使われるのが **Javaの代表的フレームワーク「Spring」**
+この章では、
 
----
+```text
+「そもそもフレームワークとは何か」
+```
 
-## ■ Springが使われる理由
+という基本から始まり、
 
-### 1. 開発効率が高い
-- 共通の仕組みが用意されているため、  
-  簡単かつスピーディに開発できる
+- Springとは何か
+- Spring Bootとは何か
+- なぜ現在のJava開発でSpring Bootが標準になっているのか
 
-### 2. 標準でセキュア
-- セキュリティが最初から考慮されており、  
-  安全なアプリを構築しやすい
+について学習する。
 
-### 3. 機能が豊富
-- よく使う機能が揃っており、  
-  小規模〜大規模まで幅広いプロジェクトに対応可能
+本章は、まだ実際のコーディングや環境構築を行う前段階であり、
 
-### 4. 常に進化している
-- 継続的に開発されており、  
-  クラウドなど最新技術にも対応
+```text
+Spring系技術全体の考え方や役割
+```
 
----
+を理解することが目的となる。
 
-## ■ 補足
-- Springは多数の機能を持ち、それぞれが  
-  **プロジェクト単位で分割・管理されている**
+特に重要なのは：
 
----
+- フレームワークとライブラリの違い
+- IoC（制御の反転）
+- DI（依存性の注入）
+- Spring Framework の役割
+- Spring Data や Spring Security など各機能の概要
+- Spring Boot の「設定より規約」
 
-# Spring Framework（基盤）
+など、
 
-## ■ 概要
-- Springの中核となる機能群
-- アプリケーション開発の「土台」を提供する
+```text
+今後のSpring Boot学習全体の土台
+```
 
----
-
-## ■ 主な機能
-
-### 1. 依存性の注入（DI: Dependency Injection）
-- プログラムの部品（オブジェクト）を外部から渡す仕組み
-- 部品同士の結びつきを弱くし、交換しやすくする
-
-### 2. Spring MVC
-- Webアプリケーション開発の基本フレームワーク
-
-### 3. トランザクション管理
-- データベース処理の失敗を防ぎ、一貫性を保つ
+となる概念である。
 
 ---
 
-## ■ 補足（DIの重要性）
-- DIはSpringの中核技術
-- 柔軟性・保守性・テスト容易性を大きく向上させる
+# ■ 1-1 フレームワークとは？
+
+## ◆ フレームワークの役割
+
+フレームワークとは：
+
+```text
+「よく使う機能の土台」
+```
+
+をあらかじめ用意してくれる仕組みである。
+
+例えばWebアプリケーションでは：
+
+- ログイン画面
+- 入力チェック
+- ユーザー検索
+- パスワード認証
+
+などの処理が頻繁に必要になる。
+
+これらを毎回ゼロから実装するのは非常に大変なため、
+
+```text
+共通部分をフレームワークが提供
+```
+
+することで開発効率を向上させる。
 
 ---
 
-## ■ 依存性の注入（DI）の具体例
+## ◆ カスタマイズ可能な仕組み
 
-### ● イメージ
-- DIなし：自分で部品を作る（固定される）
-- DIあり：外から部品をもらう（交換できる）
+フレームワークは：
+
+```text
+デフォルト機能
+```
+
+を提供するだけではなく、
+
+```text
+必要な部分だけを差し替え可能
+```
+
+になっている。
+
+例えば：
+
+- ログイン画面のデザイン変更
+- 独自認証処理の追加
+- ログイン保持機能の追加
+
+など、
+
+プロジェクトごとの要件へ柔軟に対応できる。
 
 ---
 
-### ● コード例
+## ◆ ライブラリとの違い
 
-#### ❌ DIなし
-UserServiceがEmailServiceを直接生成
+ライブラリは：
 
-class UserService {
-    private EmailService emailService = new EmailService();
+```text
+必要な時に開発者側から呼び出すもの
+```
 
-    public void send() {
-        emailService.sendEmail();
-    }
+である。
+
+一方フレームワークは：
+
+```text
+フレームワーク側が処理全体を管理し、
+開発者が必要な処理を実装する
+```
+
+という特徴がある。
+
+---
+
+## ◆ IoC（制御の反転）
+
+通常は：
+
+```text
+開発者が処理全体の流れを管理
+```
+
+する。
+
+しかしフレームワークでは：
+
+```text
+フレームワーク側が流れを管理
+```
+
+する。
+
+この考え方を：
+
+```text
+IoC（Inversion of Control）
+```
+
+という。
+
+---
+
+# ■ 1-2 Springとは？
+
+## ◆ Springの役割
+
+Springは、
+
+```text
+Java開発におけるデファクトスタンダード
+```
+
+となっているフレームワーク群である。
+
+特徴として：
+
+- 開発効率が高い
+- 標準でセキュア
+- 豊富な機能
+- 継続的に進化している
+
+などがある。
+
+---
+
+## ◆ Spring Framework
+
+Spring Framework は：
+
+```text
+Spring全体の土台
+```
+
+となる機能群である。
+
+代表的機能：
+
+- DI（依存性の注入）
+- Spring MVC
+- トランザクション管理
+
+など。
+
+---
+
+## ◆ DI（Dependency Injection）
+
+DIとは：
+
+```text
+プログラム部品を外部から差し替え可能にする仕組み
+```
+
+である。
+
+これにより：
+
+- 部品交換
+- 機能差し替え
+- テスト容易化
+
+などが可能になる。
+
+DIは：
+
+```text
+Springのコア技術
+```
+
+として非常に重要である。
+
+---
+
+# ■ Spring Data
+
+Spring Data は：
+
+```text
+データベース操作を共通化する仕組み
+```
+
+である。
+
+RDBだけでなく、
+
+- MongoDB
+- Cassandra
+- Redis
+
+などのNoSQLにも対応している。
+
+---
+
+## ◆ CRUD操作
+
+Spring Dataでは：
+
+```java
+public interface EmployeeRepository
+    extends CrudRepository<Employee, String> {
 }
+```
 
-問題：
-- 実装が固定され、差し替えが困難
+のようなRepository定義だけで、
 
----
+- Create
+- Read
+- Update
+- Delete
 
-#### ⭕ DIあり
-外部から依存を受け取る
-
-class UserService {
-    private EmailService emailService;
-
-    public UserService(EmailService emailService) {
-        this.emailService = emailService;
-    }
-
-    public void send() {
-        emailService.sendEmail();
-    }
-}
-
-使い方：
-EmailService emailService = new EmailService();
-UserService userService = new UserService(emailService);
+という基本操作を利用できる。
 
 ---
 
-### ● メリット
-- 機能の差し替えが容易（Email → SMSなど）
-- テストがしやすい
-- 大規模開発に適した設計になる
+## ◆ メソッド名によるクエリー自動生成
+
+Spring Dataでは：
+
+```java
+findByLastName
+```
+
+のようなメソッド名を書くことで、
+
+```text
+メソッド名から検索クエリーを自動生成
+```
+
+できる。
+
+これは：
+
+```text
+「設定より規約」
+```
+
+の代表例である。
+
+ただし、
+
+```text
+対象エンティティに対応フィールドが存在する
+```
+
+ことが前提となる。
 
 ---
 
-# Spring Data（データベース操作）
+# ■ Spring Security
 
-## ■ 概要
-- データベースごとに操作方法が異なると開発が複雑になる
-- Spring Dataはそれを統一する仕組み
+Spring Security は：
 
-👉 異なるDBでも「同じ書き方」で操作可能
+```text
+認証・認可
+```
 
----
-
-## ■ CRUD操作
-- Create：登録  
-- Read：取得  
-- Update：更新  
-- Delete：削除  
+を提供するセキュリティ機能である。
 
 ---
 
-## ■ コード例①（基本CRUD）
+## ◆ 認証
 
-    public interface EmployeeRepository extends CrudRepository<Employee, String> {
+```text
+本人確認
+```
 
-    }
+を行う。
 
-### ● ポイント
-- インターフェース定義だけでCRUDが利用可能
-- SQLをほぼ書かずに済む
+例：
 
----
-
-## ■ コード例②（検索）
-
-    public interface EmployeeRepository extends CrudRepository<Employee, String> {
-
-        public List<Employee> findByLastName(String lastName);
-
-    }
-
-### ● 解説
-- メソッド名からクエリが自動生成される
-
-    SELECT * FROM employee WHERE last_name = ?
+- ログイン処理
 
 ---
 
-## ■ メリット
-- DBに依存しない
-- コードがシンプル
-- 開発スピード向上
+## ◆ 認可
+
+```text
+ユーザー権限管理
+```
+
+を行う。
+
+例：
+
+- 閲覧専用ユーザー
+- 管理者ユーザー
+
+などの制御。
 
 ---
 
-# Spring Security / Batch / Cloud
+# ■ Spring Batch
 
-## ■ Spring Security
-- 認証（ログイン）と認可（権限制御）を提供
-- アプリケーションの安全性を担保
+Spring Batch は：
 
----
+```text
+大量データ処理
+```
 
-## ■ Spring Batch
-- 大量データ処理をまとめて実行
-- 例：バックアップ、集計処理
+を効率よく実装するための機能である。
 
----
+例：
 
-## ■ Spring Cloud
-- AWSやAzureなどクラウドサービスとの連携を簡素化
-- クラウド前提の開発を効率化
+- 売上集計
+- DBバックアップ
+- CSV一括処理
 
----
-
-# Spring Boot
-
-## ■ 概要
-- Springは高機能だが、初期設定や環境構築が複雑
-- それを解決するのがSpring Boot
-
-👉 「すぐ開発できる状態」を作るツール
+など。
 
 ---
 
-## ■ 解決する課題
-- 設定の複雑さ（XMLなど）
-- サーバー準備の手間（Tomcatなど）
+# ■ Spring Cloud
+
+Spring Cloud は：
+
+```text
+クラウド環境向け機能群
+```
+
+である。
+
+AWS や Azure などのクラウドサービスを、
+
+```text
+Javaから利用しやすくする
+```
+
+役割を持つ。
 
 ---
 
-## ■ 「設定より規約」
+# ■ 1-3 Spring Bootとは？
 
-### ● デフォルト設定
-- よく使われる設定を自動適用
+## ◆ Springの問題点
 
-👉 例  
-- Webアプリ選択でTomcatが自動組み込み
+従来のSpringでは：
+
+- XML設定が複雑
+- 環境構築が大変
+- Tomcat設定が必要
+
+など、
+
+```text
+「使い始めるまで」が非常に大変
+```
+
+だった。
 
 ---
 
-### ● 処理の自動生成
-- 規約に従えばコードを自動生成
+## ◆ Spring Bootの目的
 
-👉 例  
-- findByLastName → 検索処理生成
+Spring Boot は：
+
+```text
+Spring開発を簡単・高速化するための仕組み
+```
+
+である。
+
+特に：
+
+```text
+面倒な初期設定の自動化
+```
+
+が最大の特徴となる。
 
 ---
 
-## ■ メリット
-- 初期設定を大幅削減
-- すぐ開発開始できる
-- ビジネスロジックに集中可能
+# ■ 「設定より規約」
+
+Spring Bootでは：
+
+```text
+Convention over Configuration
+（設定より規約）
+```
+
+という考え方が採用されている。
+
+---
+
+## ◆ デフォルト設定
+
+よく使う設定を：
+
+```text
+最初から自動設定
+```
+
+する。
+
+例えば：
+
+- Tomcat組み込み
+- MVC設定
+- ログ設定
+
+など。
+
+---
+
+## ◆ 設定変更
+
+設定変更が必要な場合は：
+
+```text
+application.yml
+application.properties
+```
+
+などの：
+
+```text
+プロパティファイル
+```
+
+を編集する。
+
+従来の複雑なXML設定と比較して、
+
+```text
+大幅に簡略化
+```
+
+されている。
+
+---
+
+## ◆ 処理の自動生成
+
+Spring Boot / Spring Dataでは：
+
+```java
+findByLastName
+```
+
+のように、
+
+```text
+規約に従った名前
+```
+
+を書くことで、
+
+```text
+内部処理を自動生成
+```
+
+できる。
+
+これにより、
+
+```text
+開発者はビジネスロジックへ集中できる
+```
+
+ようになる。
 
 ---
 
 # ■ 最終まとめ
-- フレームワーク：開発の土台
-- Spring：高機能なJavaフレームワーク
-- Spring Boot：その複雑さを解消し、開発を加速させる仕組み
 
-👉 結論  
-Spring Bootにより、Springの機能を「実用的な速度」で扱えるようになる
+第1章では、
+
+- フレームワーク
+- ライブラリ
+- IoC
+- DI
+- Spring
+- Spring Boot
+- Spring Data
+- Spring Security
+- Spring Batch
+- Spring Cloud
+
+など、
+
+```text
+Spring Boot学習全体の基礎概念
+```
+
+について学習した。
+
+特に重要なのは：
+
+```text
+Spring Bootは、
+Springの複雑な設定を自動化し、
+「設定より規約」によって
+開発効率を大幅に向上させた
+```
+
+という点である。
+
+また、
+
+```text
+Spring Bootは設定を完全になくしたのではなく、
+「ほとんど」の設定を自動化した
+```
+
+という考え方も重要なポイントとなる。
