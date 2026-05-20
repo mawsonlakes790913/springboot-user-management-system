@@ -1,400 +1,328 @@
-# 学習ログ：1章 SpringとSpring Bootの関係
+# 第1章 学習ログ：SpringとSpring Bootの関係
 
-## ■ 学び・気づき
+## ■ 学習概要
 
-- アプリケーション開発は単なるプログラム作成ではなく、  
-  データベース・セキュリティ・クラウドなど複数の要素の組み合わせで成り立っている :contentReference[oaicite:0]{index=0}
+第1章では、
 
-- フレームワークは「便利なライブラリ」ではなく、  
-  **開発の土台（設計の枠組み）そのもの**である
+- フレームワークとは何か
+- Springとは何か
+- Spring Bootとは何か
 
-- Springは単一の機能ではなく、  
-  **複数のプロジェクトの集合体で構成されている**
+という、
 
-- Spring Frameworkはその中核であり、  
-  **Web・DB・トランザクションなどの基盤機能を提供する**
+```text
+Spring Boot学習全体の入口
+```
 
-- Spring Dataの特徴は、  
-  **データベースごとの差異を吸収し、同じ書き方で操作できる点にある**
+となる内容を学習した。
 
-- CRUDという概念は単なる操作ではなく、  
-  **データベース操作の基本パターンである**
+この章はまだ実際のコーディングや環境構築には入っておらず、
 
-- メソッド名からクエリを自動生成する仕組みは、  
-  **コード記述量削減だけでなく、設計の一貫性にも寄与する**
+```text
+「Spring系技術が何を目的として作られたのか」
+```
 
-- Spring Security / Batch / Cloudはそれぞれ  
-  **セキュリティ・バッチ処理・クラウド対応という役割分担が明確に分かれている**
+を理解することが中心だった。
 
-- Spring Bootは新しいフレームワークではなく、  
-  **Springを使いやすくするための仕組み（設定・起動の簡略化）である**
+また、
 
-- 「設定より規約」という考え方は、  
-  **自由度を制限する代わりに開発速度と統一性を高める設計思想である**
+- IoC（制御の反転）
+- DI（依存性の注入）
+- Spring Data
+- Spring Security
+- Spring Boot
 
----
+など、
 
-# ■ つまずいたポイント
-- 教科書の「DIなし / DIあり」の比較を見ても意味が分からなかった
-- コードの違いは分かるが、**何が本質的に変わっているのか理解できなかった**
-- 「newを外に出すだけ」に見え、なぜ重要なのか納得できなかった
+今後頻繁に登場する用語や概念についても概要を学習した。
 
 ---
 
-## ■ 教科書の原文コード
+# ■ フレームワークについて理解したこと
 
-## ❌ DIなし
-UserServiceがEmailServiceを直接生成
+フレームワークは：
 
-class UserService {
-    private EmailService emailService = new EmailService();
+```text
+「よく使う処理の土台」
+```
 
-    public void send() {
-        emailService.sendEmail();
-    }
-}
+を提供する仕組みであり、
 
-問題：
-- 実装が固定され、差し替えが困難
+- ログイン機能
+- 入力チェック
+- DBアクセス
 
----
+などを毎回ゼロから作らなくてよい点が大きな利点だと理解した。
 
-## ⭕ DIあり
-外部から依存を受け取る
+また、
 
-class UserService {
-    private EmailService emailService;
+```text
+必要な部分だけ差し替えられる
+```
 
-    public UserService(EmailService emailService) {
-        this.emailService = emailService;
-    }
-
-    public void send() {
-        emailService.sendEmail();
-    }
-}
-
-使い方：
-EmailService emailService = new EmailService();
-UserService userService = new UserService(emailService);
+という考え方も重要だと感じた。
 
 ---
 
-## ■ DIなしコードの検証
+# ■ ライブラリとの違い
 
-private EmailService emailService = new EmailService();
+ライブラリは：
 
-この1行には以下の意味がある：
-- 型（EmailService）を指定
-- 変数（emailService）を作成
-- インスタンスを生成して代入
+```text
+開発者側が必要時に呼び出すもの
+```
 
----
+であるのに対し、
 
-## ■ 気づいたこと
+フレームワークは：
 
-このコードでは以下がすべてUserServiceの中で決まっている：
+```text
+フレームワーク側が処理の流れを管理する
+```
 
-- 使うクラス → EmailService
-- 作り方 → new EmailService()
-- タイミング → UserService生成時
+という違いがあることを学んだ。
 
-👉 つまり  
-**依存関係が完全にクラス内部に固定されている**
+この考え方が：
 
----
+```text
+IoC（制御の反転）
+```
 
-## ■ 問題の具体例
-
-SMSに変更したい場合：
-
-class SmsService {
-    public void send() {
-        System.out.println("SMS送信");
-    }
-}
-
-👉 しかし現在は new EmailService() 固定
-
-→ UserServiceを書き換える必要がある
+につながっている。
 
 ---
 
-## ■ DIありコードの検証
+# ■ Springについて理解したこと
 
-class UserService {
-    private EmailService emailService;
+Springは単一の機能ではなく、
 
-    public UserService(EmailService emailService) {
-        this.emailService = emailService;
-    }
-}
+- Spring Framework
+- Spring Data
+- Spring Security
+- Spring Batch
+- Spring Cloud
 
----
+など、
 
-## ■ 気づいたこと
+```text
+複数の機能群の総称
+```
 
-- UserServiceはEmailServiceを「使うだけ」
-- どの実装を使うかは外部で決まる
+であることを理解した。
 
----
+また、
 
-## ■ 外側での制御
+```text
+DI（依存性の注入）
+```
 
-EmailService emailService = new EmailService();
-UserService userService = new UserService(emailService);
+がSpringのコア技術であり、
 
----
+プログラム部品を柔軟に差し替え可能にすることで：
 
-## ■ ここでの変化
+- 保守性
+- 拡張性
+- テスト容易性
 
-👉 「作る場所」が変わった
-
-- DIなし → クラス内部で生成
-- DIあり → 外部で生成して渡す
-
----
-
-## ■ 差し替えの例
-
-EmailService emailService = new SmsService();
-
-※ SmsServiceがEmailServiceと同じ型として扱える場合
-（継承 or インターフェース実装）
-
-👉 UserServiceは変更不要
+を高めていることを学んだ。
 
 ---
 
-## ■ 一番シンプルな理解
+# ■ Spring Dataについて理解したこと
 
-- DIなし → new を自分で書く
-- DIあり → new を外に追い出す
+Spring Dataでは：
 
----
+```java
+findByLastName
+```
 
-## ■ 「newを外に追い出す」の意味
+のようなメソッド名から、
 
-### ● 責任の分離
+```text
+検索クエリーを自動生成
+```
 
-- Before：UserService = 作る + 使う
-- After：UserService = 使うだけ
+できることを学んだ。
 
----
+Repository定義だけで：
 
-## ■ Qiita記事からの理解 :contentReference[oaicite:0]{index=0}
+- Create
+- Read
+- Update
+- Delete
 
-## ■ 問題の本質
-- クラス内で依存オブジェクトを生成すると
-- 外部環境に強く依存してしまう
-
-例：
-- ネットワーク
-- 時刻
-- ランダム
+などのCRUD操作を簡単に実装できる点は非常に便利だと感じた。
 
 ---
 
-## ■ 問題
-👉 テストできない
+# ■ 自分で調べて理解した点①
 
-- 結果が毎回変わる
-- 外部環境に依存
-- 正しさを検証できない
+教科書では：
 
----
+```java
+findByLastName
+```
 
-## ■ DIの本質
+というメソッド名を書くだけで、
 
-> 依存関係を外から注入することで  
-> **動作をコントロール可能にすること**
+```text
+「名字検索処理を自動生成できる」
+```
 
----
+と説明されていた。
 
-## ■ 結論
+しかし実際には：
 
-> DIの目的は  
-> **テスト可能性を確保すること**
+```text
+何でも自動生成できるわけではない
+```
 
----
+ことを調べて理解した。
 
-## ■ Springとの関係
+このメソッドが正しく動作するためには、
 
-## ■ DIはJavaだけでもできる
-- 手動でも実装可能
+```text
+対象エンティティに
+lastName フィールドが存在している
+```
 
----
+ことが前提となる。
 
-## ■ しかし実務では破綻する
+つまりSpring Dataは：
 
-依存関係が増えると：
+```text
+メソッド名
+↓
+エンティティのフィールド解析
+↓
+クエリー自動生成
+```
 
-UserController  
- → UserService  
-   → UserRepository  
-     → DataSource  
-
-さらに：
-- SecurityService
-- LoggingService
-- PaymentService
-
----
-
-## ■ 手動DIの問題
-
-- 配線が爆発する
-- ライフサイクル管理できない
-- 設定が分散する
-- 差し替えが困難
+を行っていることが理解できた。
 
 ---
 
-## ■ Springの役割
+# ■ Spring Bootについて理解したこと
 
-> **依存関係の生成と配線を自動化する**
+Spring Bootは：
 
----
+```text
+Spring開発を簡単・高速化するための仕組み
+```
 
-## ■ 違いの整理
+であり、
 
-### ● 手動DI
-- newを書く
-- 配線する
-- 管理する
+特に：
 
-### ● Spring
-- newを書かない
-- 配線しない
-- 管理しない
+```text
+「設定より規約」
+```
 
-👉 フレームワークがすべて担当
+という考え方が重要であることを学んだ。
 
----
+- デフォルト設定の自動化
+- Tomcat組み込み
+- 初期設定簡略化
 
-## ■ 最終理解
+などによって、
 
-DIとは：
+```text
+環境構築の負担を大幅に削減
+```
 
-> **依存関係の生成を外部に任せることで、  
-> 動作をコントロール可能にし、テスト可能にする設計**
-
----
-
-## ■ 自分の理解の変化
-
-最初：
-- 「ただnewの位置が違うだけでは？」
-
-途中：
-- 「依存が固定されるかどうかの違い」
-
-最終：
-- 「テスト可能性と依存制御のための設計」
-- 「Springはそれを自動化するための仕組み」
+している。
 
 ---
 
-# ■ つまずいたポイント②（Spring Bootと各Springの関係）
+# ■ 自分で調べて理解した点②
 
-## ■ 疑問
-- Spring Bootの中にSpring FrameworkやSpring Dataが入っているのか？
-- それとも全部別物なのか？
-- Spring Bootを使うと何が起きているのかが曖昧だった
+最初は、
 
----
+```text
+「結局設定を書くなら、
+昔のSpringと何が違うのか？」
+```
 
-## ■ 最初の誤解
-- Spring Boot = Springの本体
-- 他のSpring機能が「内包されている」ように感じていた
+という疑問を感じた。
 
-👉 構造が分からず、全体像が曖昧だった
+Spring Bootは：
 
----
+```text
+XML設定が複雑だった問題を解決するため
+```
 
-## ■ 調べて分かったこと :contentReference[oaicite:0]{index=0}
+に作られたにも関わらず、
 
-### ● 各Springは独立している
+結局：
 
-- Spring Framework（DIやMVCなどの基盤）
-- Spring Data（DB操作）
-- Spring Security（認証・認可）
+```text
+application.yml
+application.properties
+```
 
-👉 すべて別々のプロジェクト
+などを編集する必要があるため、
 
----
+```text
+「面倒さはあまり変わらないのでは？」
+```
 
-### ● Spring Bootの役割
+と感じた。
 
-- 設定を自動化する
-- 依存関係をまとめる
-- 起動までを簡単にする
+しかし調べてみると、
 
-👉 「中に入っている」ではなく  
-👉 **「まとめて使いやすくする仕組み」**
+Spring Bootは：
 
----
+```text
+設定を完全になくしたのではなく、
+「ほとんど」の設定を自動化した
+```
 
-## ■ 実務的な理解
+という思想であることが理解できた。
 
-Spring Bootを使うと：
+特に：
 
-- DI（Spring Framework） → 自動で有効
-- Spring Data → 依存追加だけで使用可能
-- Spring Security → 同様にすぐ使える
+- デフォルト設定が最初から用意されている
+- XMLより設定が圧倒的に簡単
+- YAML形式は可読性も高い
+- Tomcatなども自動組み込み
 
-👉 **結果として全部同時に使える**
+などによって、
 
----
+```text
+環境構築速度が大幅に向上
+```
 
-## ■ 気づいたこと
-
-- Spring Bootは「機能そのもの」ではない
-- 「使い方を簡単にする仕組み」である
-
----
-
-## ■ DIとのつながり
-
-- DIはJava単体でも実現可能
-- しかし規模が大きくなると管理できない
-
-👉 Spring Boot + Spring Frameworkが  
-👉 **DIの生成・配線・管理を自動化している**
+していることがわかった。
 
 ---
 
-# ■ 最終理解（全体像）
+# ■ 全体を通して
 
-## ● DI
-- 依存関係の生成を外部に任せる設計
-- テスト可能性と柔軟性を確保する
+第1章はまだ概要中心の内容だったため、
 
----
+```text
+技術的難易度はそこまで高くなかった
+```
 
-## ● Spring Framework
-- DIなどの基盤機能を提供
+が、
 
----
+今後のSpring Boot学習全体に関わる：
 
-## ● Spring Boot
-- それらをまとめて簡単に使えるようにする
+- IoC
+- DI
+- Repository
+- 自動設定
+- 規約ベース開発
 
----
+などの考え方が多く登場した。
 
-## ■ 自分の理解の変化
+特に：
 
-最初：
-- DIもSpringもよく分からない
+```text
+Spring Bootは
+「全部を自動化する魔法」
+ではなく、
+「共通部分を強力に自動化する仕組み」
+```
 
-途中：
-- DIはnewの位置の違い？
-
-最終：
-- DIは依存関係をコントロールするための設計
-- Springはそれを実用レベルで自動化する仕組み
-- Spring Bootはそれをさらに簡単に使えるようにしたもの
-
-
-
----
+であることを理解できたのは大きかった。
