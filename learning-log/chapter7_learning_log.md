@@ -1,21 +1,20 @@
 # ■ 第7章 バインドとエラーメッセージ
 
-# ■ この章の目的
+## ■ この章の目的
 
 この章では、
 
 - バインド（Binding）
 - フォームクラス
 - `@ModelAttribute`
+- `th:object`
 - `th:field`
 - `BindingResult`
 - バインドエラーメッセージ
 
-などを利用しながら、
+などを利用し、
 
-```text
-画面入力値をJavaオブジェクトへ自動的に紐づける仕組み
-```
+> 画面入力値をJavaオブジェクトへ自動的に紐づける仕組み
 
 を学習した。
 
@@ -27,34 +26,26 @@
 
 などを利用し、
 
-```text
-画面を表示する
-```
+> Java → HTML
 
-ところまでを中心に学んでいた。
+方向のデータ受け渡しを中心に学んでいた。
 
 しかし実際のWebアプリでは、
 
-```text
-ユーザーが入力した値を
-サーバー側で受け取る
-```
+> ユーザーが入力した値を  
+> サーバー側で受け取る
 
 必要がある。
 
 そのため今回は、
 
-```text
-画面入力
-↓
-Javaオブジェクト
-```
+> HTML入力  
+> ↓  
+> Javaオブジェクト
 
-を自動で結びつける、
+への変換を自動化する、
 
-```text
-バインド
-```
+> バインド
 
 を学習した。
 
@@ -65,28 +56,22 @@ Javaオブジェクト
 
 など、
 
-```text
-型変換失敗
-```
+> 型変換失敗
 
 が発生した際に、
 
-```text
-Spring Bootのデフォルトエラー画面
-```
+> Whitelabel Error Page
 
 ではなく、
 
-```text
-入力欄の近くへ
-分かりやすいエラーメッセージを表示する
-```
+> 入力欄の近くへ  
+> 分かりやすいエラーメッセージを表示する
 
 ところまで実装した。
 
 ---
 
-# ■ この章の流れ
+## ■ この章の流れ
 
 この章では大きく分けて、
 
@@ -103,7 +88,77 @@ Spring Bootのデフォルトエラー画面
 
 ---
 
-# ■ なぜバインドが必要なのか？
+## ■ 6章までとの違い
+
+6章までは、主に：
+
+> Controller  
+> ↓  
+> HTML表示  
+> ↓  
+> ボタン押下  
+> ↓  
+> 別画面へ遷移
+
+という、
+
+> 画面遷移
+
+が中心だった。
+
+例えば：
+
+```java
+@PostMapping("/signup")
+public String signup() {
+    return "redirect:/login";
+}
+```
+
+のように、
+
+> POSTされた  
+> ↓  
+> 画面遷移した
+
+だけで、
+
+> 入力値そのもの
+
+はほぼ扱っていなかった。
+
+つまり6章までは、
+
+> Java → HTML
+
+方向のみだった。
+
+しかし7章では、
+
+```java
+@PostMapping("/signup")
+public String signup(SignupForm form)
+```
+
+のように、
+
+> HTML → Javaオブジェクト
+
+方向の受け渡しが追加された。
+
+これにより、
+
+> 画面入力値  
+> ↓  
+> Javaオブジェクト  
+> ↓  
+> 将来的にはDB保存
+
+というWebアプリの本格的な流れの土台が作られた。
+
+---
+
+## ■ なぜバインドが必要なのか？
 
 バインド登場前は、
 
@@ -120,9 +175,7 @@ public String signup(
 
 のように、
 
-```text
-入力値を1個ずつ受け取る
-```
+> 入力値を1個ずつ受け取る
 
 必要があった。
 
@@ -167,9 +220,7 @@ public class SignupForm {
 
 のような、
 
-```text
-画面入力専用クラス
-```
+> 画面入力専用クラス
 
 へまとめて受け取る。
 
@@ -177,59 +228,11 @@ public class SignupForm {
 
 ---
 
-# ■ なぜエラーメッセージ設定が必要なのか？
-
-現状のままでは、
-
-- age に abc
-- birthday に 19950815
-
-などを入力すると、
-
-```text
-Whitelabel Error Page
-```
-
-のような、
-
-```text
-開発者向けエラー画面
-```
-
-が表示されてしまう。
-
-しかし実際のWebアプリでは、
-
-```text
-ユーザーが理解できる形で
-入力ミスを表示する
-```
-
-必要がある。
-
-そのため今回は、
-
-- ValidationMessages.properties
-- BindingResult
-
-を利用し、
-
-```text
-エラー時でも登録画面へ戻し、
-入力ミスを表示する
-```
-
-ように修正した。
-
----
-
-# ■ ◆ バインド（Binding）
+## ■ ◆ バインド（Binding）
 
 画面入力値を：
 
-```text
-Javaオブジェクトへ自動格納
-```
+> Javaオブジェクトへ自動格納
 
 する仕組み。
 
@@ -238,8 +241,6 @@ Javaオブジェクトへ自動格納
 ```html
 <input type="text" name="userId">
 ```
-
-。
 
 これがPOST送信されると、
 
@@ -251,75 +252,7 @@ private String userId;
 
 ---
 
-# ■ ◆ @ModelAttribute
-
-フォームクラスを：
-
-```text
-自動生成 + Model登録
-```
-
-するアノテーション。
-
-例えば：
-
-```java
-@GetMapping("/signup")
-public String getSignup(
-        Model model,
-        @ModelAttribute SignupForm form)
-```
-
-。
-
-内部的には：
-
-```java
-SignupForm form = new SignupForm();
-model.addAttribute("signupForm", form);
-```
-
-のような処理をSpringが自動で行っている。
-
----
-
-# ■ ◆ th:field
-
-入力欄とJavaフィールドを紐づける。
-
-```html
-<input th:field="*{userId}">
-```
-
-。
-
-これにより：
-
-```text
-input
-↓
-SignupForm.userId
-```
-
-へ自動バインドされる。
-
----
-
-# ■ ◆ BindingResult
-
-バインド結果を保存するオブジェクト。
-
-内部には：
-
-- エラー有無
-- エラー対象
-- エラーメッセージ
-
-などが入っている。
-
----
-
-# ■ 7-1 バインドの実装
+## ■ 7-1 バインドの実装
 
 この節では、
 
@@ -329,15 +262,13 @@ SignupForm.userId
 
 を利用し、
 
-```text
-画面入力 → Javaオブジェクト
-```
+> 画面入力 → Javaオブジェクト
 
 を実装した。
 
 ---
 
-# ■ SignupForm 作成
+## ■ SignupForm 作成
 
 ```java
 @Data
@@ -355,77 +286,37 @@ public class SignupForm {
 }
 ```
 
-。
-
 ---
 
-# ■ 【補足】SignupForm は何なのか？
+## ■ 【補足】SignupForm は何なのか？
 
-最初は：
+最初は、
 
-```text
-「入力値を保存するだけのクラス？」
-```
+> 「入力値を保存するだけのクラス？」
 
 くらいの認識だった。
 
 しかし実際には、
 
-```text
-HTMLフォームとJavaを繋ぐ
-受け皿
-```
+> HTMLフォームとJavaを繋ぐ受け皿
 
 という役割だった。
 
 つまり：
 
-```text
-画面入力値を
-1個ずつバラバラで扱うのではなく、
-1つのJavaオブジェクトへまとめる
-```
+> 画面入力値を  
+> 1個ずつバラバラで扱うのではなく、  
+> 1つのJavaオブジェクトへまとめる
 
-ためのクラス。
+ためのクラスだった。
 
 ---
 
-# ■ 【疑問】バインド登場前はどうしていたのか？
-
-以前は：
-
-```java
-@RequestParam
-```
-
-で1個ずつ受け取っていた。
-
-しかし入力欄が増えると、
-
-```text
-Controllerが
-@RequestParamだらけ
-```
-
-になる。
-
-そのため：
-
-```text
-フォーム専用クラス
-```
-
-へまとめる設計が必要だった。
-
----
-
-# ■ 【補足】Date型へ変換する理由
+## ■ 【補足】Date型へ変換する理由
 
 ブラウザのinputは、
 
-```text
-全部文字列
-```
+> 全部文字列
 
 として送信される。
 
@@ -445,11 +336,9 @@ private Date birthday;
 
 なので、
 
-```text
-文字列
-↓
-Date型
-```
+> 文字列  
+> ↓  
+> Date型
 
 へ変換しなければならない。
 
@@ -459,128 +348,154 @@ Date型
 @DateTimeFormat(pattern = "yyyy/MM/dd")
 ```
 
-。
+だった。
 
 ---
 
-# ■ Controller 修正
+## ■ ◆ @ModelAttribute
+
+フォームクラスを：
+
+> 自動生成 + Model登録
+
+するアノテーション。
+
+内部的には：
 
 ```java
-@GetMapping("/signup")
-public String getSignup(
-        Model model,
-        @ModelAttribute SignupForm form)
-```
-
-。
-
----
-
-# ■ 【疑問】GET時なのにSignupFormを渡す理由
-
-最初、
-
-```text
-まだ入力していないのに
-なぜSignupFormが必要なのか？
-```
-
-が理解できなかった。
-
-調べると、
-
-```html
-<form th:object="${signupForm}">
-```
-
-を書く以上、
-
-```text
-HTML側はsignupFormを前提
-```
-
-としていることが分かった。
-
-そのためController側で、
-
-```java
+SignupForm form = new SignupForm();
 model.addAttribute("signupForm", form);
 ```
 
-相当の処理を行う必要があった。
+のような処理をSpringが自動で行っている。
 
 ---
 
-# ■ th:field の設定
+## ■ 【疑問】なぜGET時にSignupFormを渡す必要がある？
 
-```html
-<input type="text"
-       id="userId"
-       class="form-control"
-       th:field="*{userId}">
-```
+結論から言うと、
 
-。
+> HTMLフォームが  
+> どのJavaオブジェクトと接続するのか
 
----
+をThymeleafへ教えるため。
 
-# ■ 【疑問】th:object と th:field の関係が難しかった
-
-最初、
-
-```text
-th:field="${signupForm.userId}"
-```
-
-のような理解をしており、
-
-```text
-formタグにも
-th:fieldがあるのでは？
-```
-
-と誤解していた。
-
-しかし実際には：
+例えば：
 
 ```html
 <form th:object="${signupForm}">
 ```
 
-で：
-
-```text
-このform全体はsignupFormを使う
-```
-
-と宣言し、
-
-その内部で：
+を書くことで、
 
 ```html
-th:field="*{userId}"
+<input th:field="*{userId}">
 ```
 
-のように、
+が：
 
 ```text
-*{}でフィールドだけを書く
+signupForm.userId
 ```
 
-構造だった。
+を参照できるようになる。
 
-ここは、
+つまりGET時にSignupFormを渡している理由は、
 
-- HTML
-- Thymeleaf
-- Spring
+> HTMLフォームとJavaオブジェクトを接続するため
 
-の役割境界が分かりづらく、
-かなり混乱した。
+だった。
 
 ---
 
-# ■ POST時のバインド
+## ■ 【疑問】th:field="*{userId}" だけでなぜ name="userId" になるのか？
+
+これは、
+
+> Thymeleafがth:fieldを解析し、  
+> name属性やvalue属性を自動生成している
+
+ため。
+
+ブラウザはフォーム送信時、
+
+```html
+<input name="userId">
+```
+
+を見てPOSTデータを作る。
+
+つまり最終的には：
+
+```text
+userId=Naoki
+```
+
+のようなHTTPリクエストを送る必要がある。
+
+そのためThymeleafは、
+
+```text
+th:field="*{userId}"
+```
+
+を見て内部的に：
+
+> signupForm.userId と接続したい  
+> ↓  
+> POST時には name="userId" が必要  
+> ↓  
+> 自動生成しよう
+
+という処理をしている。
+
+---
+
+## ■ 【疑問】th:field はname属性を置き換えるだけ？
+
+最初は、
+
+> th:field = name属性の省略記法
+
+くらいに思っていた。
+
+しかし実際には、
+
+- name属性
+- value属性
+- checked属性
+- selected属性
+
+など、
+
+> Javaオブジェクトとの接続に必要な属性
+
+を自動生成する仕組みだった。
+
+例えば：
+
+```java
+form.setUserId("Naoki");
+```
+
+状態なら、
+
+```html
+<input value="Naoki">
+```
+
+相当も自動生成される。
+
+つまり：
+
+> th:fieldは  
+> HTML入力欄とJavaオブジェクトを繋ぐ総合機能
+
+だった。
+
+---
+
+## ■ POST時のバインド
 
 ```java
 @PostMapping("/signup")
@@ -588,195 +503,95 @@ public String postSignup(
         @ModelAttribute SignupForm form)
 ```
 
-。
-
 ---
 
-# ■ 【補足】POST後に何が起きているのか？
+## ■ 【補足】POST後に何が起きているのか？
 
 内部的には：
 
-```text
-ユーザー入力
-↓
-POST送信
-↓
-SpringがSignupForm生成
-↓
-setUserId(...)
-setPassword(...)
-```
+> ユーザー入力  
+> ↓  
+> POST送信  
+> ↓  
+> SpringがSignupForm生成  
+> ↓  
+> setUserId(...)  
+> setPassword(...)
 
 などを自動実行している。
 
 つまり：
 
-```text
-Spring内部でsetterが大量実行
-```
+> Spring内部でsetterが大量実行
 
 されているイメージだった。
 
 ---
 
-# ■ ログ確認
+## ■ 【疑問】POSTされた入力値はいつSignupFormへ入るのか？
 
-```java
-log.info(form.toString());
-```
+流れとしては：
 
-。
+> ① ユーザー入力  
+> ↓  
+> ② POST送信  
+> ↓  
+> ③ SpringがpostSignup()を発見  
+> ↓  
+> ④ SignupFormをnew  
+> ↓  
+> ⑤ setterを自動実行  
+> ↓  
+> ⑥ postSignup(form)呼び出し
 
-これにより：
-
-```text
-SignupForm(
- userId=mawsonlakes,
- age=30
-)
-```
-
-などが表示された。
-
----
-
-# ■ 【疑問】入力データはどこで処理しているのか？
-
-最初、
-
-```text
-DB保存していないのに
-なぜ登録完了？
-```
-
-と混乱した。
-
-しかし今回は：
-
-```text
-バインド学習用
-```
-
-なので、
-
-```text
-SignupFormへ値が入ること
-```
-
-だけ確認していた。
+となる。
 
 つまり：
 
-```text
-保存処理は未実装
-```
+> postSignup()実行前
 
-だった。
+に既にバインドは完了している。
 
 ---
 
-# ■ 【間違い】誕生日入力で失敗
+## ■ 【疑問】なぜPOST時の@ModelAttributeにもModel登録機能があるのか？
 
-最初、
+POST時の`@ModelAttribute`は、
 
-```text
-19950815
+> HTML → Java
+
+のためだけではなかった。
+
+内部的には：
+
+```java
+model.addAttribute("signupForm", form);
 ```
 
-と入力した。
+も行っている。
 
-しかし：
+これは、
 
-```text
-yyyy/MM/dd
-```
+> バリデーションエラー時に  
+> 入力内容を画面へ戻すため
 
-形式ではないため、
+である。
 
-```text
-Failed to convert...
-```
+もしModelへformが無いと、
 
-エラーになった。
+> 入力済み内容を再表示
 
-UIに表示されていた：
+できない。
 
-```text
-/
-```
+つまりPOST時の`@ModelAttribute`は、
 
-を、
+> バインド + 再表示準備
 
-```text
-自動補完されるもの
-```
-
-と誤解していた。
+を同時に行っていた。
 
 ---
 
-# ■ 7-2 エラーメッセージの編集
-
-この節では、
-
-- ValidationMessages.properties
-- BindingResult
-
-を利用し、
-
-```text
-バインド失敗時でも
-画面へ戻す
-```
-
-実装を行った。
-
----
-
-# ■ ValidationMessages.properties
-
-```properties
-typeMismatch.signupForm.age=数値を入力してください
-typeMismatch.signupForm.birthday=yyyy/MM/dd形式で入力してください
-```
-
-。
-
----
-
-# ■ 【補足】messages.propertiesを分割する理由
-
-最初は：
-
-```text
-messages.propertiesだけで十分では？
-```
-
-と思った。
-
-しかし：
-
-- 画面表示文言
-- エラーメッセージ
-
-を全部混ぜると、
-
-```text
-巨大化して管理しづらい
-```
-
-ことが分かった。
-
-そのため：
-
-- messages.properties
-- ValidationMessages.properties
-
-へ分割していた。
-
----
-
-# ■ BindingResult
+## ■ BindingResult
 
 ```java
 public String postSignup(
@@ -785,25 +600,33 @@ public String postSignup(
         BindingResult bindingResult)
 ```
 
-。
+---
+
+## ■ ◆ BindingResult
+
+バインド結果を保存するオブジェクト。
+
+内部には：
+
+- エラー有無
+- エラー対象
+- エラーメッセージ
+
+などが入っている。
 
 ---
 
-# ■ 【補足】BindingResult は何なのか？
+## ■ 【補足】BindingResult は何なのか？
 
 最初、
 
-```text
-なぜ突然BindingResultが必要？
-```
+> なぜ突然BindingResultが必要？
 
 となった。
 
 調べると、
 
-```text
-バインド成功 / 失敗結果
-```
+> バインド成功 / 失敗結果
 
 を保存しているオブジェクトだった。
 
@@ -815,15 +638,13 @@ age = abc
 
 のような：
 
-```text
-Integer変換失敗
-```
+> Integer変換失敗
 
 を内部に記録している。
 
 ---
 
-# ■ バインド失敗時処理
+## ■ バインド失敗時処理
 
 ```java
 if (bindingResult.hasErrors()) {
@@ -831,11 +652,9 @@ if (bindingResult.hasErrors()) {
 }
 ```
 
-。
-
 ---
 
-# ■ 【疑問】BindingResult の位置が重要なのはなぜか？
+## ■ 【疑問】BindingResult の位置が重要なのはなぜか？
 
 教科書では：
 
@@ -848,112 +667,129 @@ BindingResult bindingResult
 
 最初は：
 
-```text
-なぜこの順番固定？
-```
+> なぜこの順番固定？
 
 が分からなかった。
 
 調べるとSpringは：
 
-```text
-「どのFormのBindingResultか」
-```
+> 「どのFormのBindingResultか」
 
 を対応付ける必要があり、
 
-```text
-対象Formの直後
-```
+> 対象Formの直後
 
 に書く必要があった。
 
 ---
 
-# ■ 【疑問】パターン2・3は実務向きなのか？
-
-調べると、
-
-```text
-小規模なら便利
-```
-
-だが、
-
-実務では：
-
-- 年齢
-- 金額
-- 在庫数
-
-など、
-
-同じIntegerでも意味が異なる。
-
-そのため一般的には：
-
-```text
-Form + field
-```
-
-単位で設定する：
+## ■ ValidationMessages.properties
 
 ```properties
-typeMismatch.signupForm.age
+typeMismatch.signupForm.age=数値を入力してください
+typeMismatch.signupForm.birthday=yyyy/MM/dd形式で入力してください
 ```
-
-形式が最も実用的だった。
 
 ---
 
-# ■ 今回特に重要だった理解
+## ■ 【補足】messages.propertiesを分割する理由
+
+最初は、
+
+> messages.propertiesだけで十分では？
+
+と思った。
+
+しかし：
+
+- 画面表示文言
+- エラーメッセージ
+
+を全部混ぜると、
+
+> 巨大化して管理しづらい
+
+ことが分かった。
+
+そのため：
+
+- messages.properties
+- validationMessages.properties
+
+へ分割していた。
+
+---
+
+## ■ spring.messages.basename
+
+```yaml
+spring:
+  messages:
+    basename: messages,validationMessages
+```
+
+ここでは、
+
+> Spring Bootが読み込む  
+> メッセージファイル一覧
+
+を指定している。
+
+ルールは：
+
+- src/main/resources基準
+- 拡張子不要
+- カンマ区切り
+
+である。
+
+---
+
+## ■ 今回特に重要だった理解
 
 今回最も重要だったのは、
 
-```text
-Springが
-HTML入力値を
-自動でJavaオブジェクトへ変換している
-```
+> Springが  
+> HTML入力値を  
+> 自動でJavaオブジェクトへ変換している
 
 という点だった。
 
 特に：
 
-```text
-th:field
-↓
-POST送信
-↓
-Binding
-↓
-SignupForm完成
-```
+> th:field  
+> ↓  
+> POST送信  
+> ↓  
+> Binding  
+> ↓  
+> SignupForm完成
 
 という流れが繋がったことで、
 
-```text
-画面とJavaの連携
-```
+> 画面とJavaの連携
 
 をかなり具体的に理解できた。
 
 ---
 
-# ■ 学び・気づき
+## ■ 学び・気づき
 
 - バインドは入力値自動格納機能
 - SignupFormは入力専用オブジェクト
 - `@ModelAttribute`はModel登録も行う
 - `th:field`は入力欄とフィールド紐づけ
-- `BindingResult`はエラー保存オブジェクト
+- Springはname属性を自動生成する
 - Springは文字列→Date/Integer変換も行う
+- `BindingResult`はエラー保存オブジェクト
 - ValidationMessages.propertiesでエラー管理する
 - BindingResultでWhitelabel Error Pageを防げる
+- GET時はJava→HTML接続準備
+- POST時はHTML→Javaバインド
 
 ---
 
-# ■ 苦戦した理由
+## ■ 苦戦した理由
 
 今回は、
 
@@ -965,78 +801,61 @@ SignupForm完成
 
 など、
 
-```text
-画面側とSpring内部処理
-```
+> 画面側とSpring内部処理
 
 が強く結びついていた。
 
 特に：
 
-```text
-どのタイミングで
-SignupFormへ値が入るのか
-```
+> どのタイミングで  
+> SignupFormへ値が入るのか
 
 がかなり難しかった。
 
 また、
 
-```text
-GET時の空フォーム
-POST時の自動バインド
-```
+> GET時の空フォーム  
+> POST時の自動バインド
 
 の違いも最初は混乱した。
 
 さらに：
 
-```text
-th:object
-th:field
-${}
-*{}
-```
+> th:object  
+> th:field  
+> ${}  
+> *{}
 
 の関係が複雑で、
 
-```text
-HTMLとThymeleafの境界
-```
+> HTMLとThymeleafの境界
 
 を理解するのにかなり苦戦した。
 
 しかし一度：
 
-```text
-画面入力
-↓
-POST送信
-↓
-Spring内部でBinding
-↓
-SignupForm完成
-↓
-エラー時はBindingResultへ保存
-```
+> 画面入力  
+> ↓  
+> POST送信  
+> ↓  
+> Spring内部でBinding  
+> ↓  
+> SignupForm完成  
+> ↓  
+> エラー時はBindingResultへ保存
 
 という全体像が見えると、
 
-5章や6章ほど概念が複雑に分岐しているわけではなく、
+> 「内部は複雑だが、  
+> 実装パターン自体は再現性が高い」
 
-```text
-「理解後はかなり再現性が高い仕組み」
-```
-
-だと感じた。
+と感じた。
 
 また今回特に印象的だったのは、
 
-```text
-普段日常的に使っている
-「ユーザー登録画面」
-「ログイン画面」
-```
+> 普段日常的に使っている  
+> 「ユーザー登録画面」  
+> 「ログイン画面」
 
 の裏側で、
 
@@ -1053,17 +872,13 @@ SignupForm完成
 
 その一方で、
 
-```text
-Spring側がかなり自動化してくれているため、
-仕組みさえ理解できれば
-実装自体は一定の型へ落とし込める
-```
+> Spring側がかなり自動化してくれているため、  
+> 仕組みさえ理解できれば  
+> 実装自体は一定の型へ落とし込める
 
 という、
 
-```text
-「内部は複雑だが、
-実装パターン自体は再現性が高い」
-```
+> 「内部は複雑だが、  
+> 実装パターンは再現性が高い」
 
 という二面性を強く感じた章だった。
