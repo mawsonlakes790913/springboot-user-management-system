@@ -15,6 +15,7 @@
 - messages.properties
 - MessageSource
 - リダイレクト
+- PRGパターン
 
 などを利用した、
 
@@ -52,6 +53,8 @@ Spring Boot内部の処理
 - CSS
 - JavaScript
 - Bootstrap
+- HTTP
+- URL
 
 など、
 
@@ -61,13 +64,15 @@ Spring Boot内部の処理
 
 も必要になった。
 
-そのため今回は、
+また、復習を通して、
 
 ```text
-Spring Boot + HTML/CSS
+Spring BootはJavaだけで完結しているわけではなく、
+HTML・CSS・HTTP・Thymeleafなどと連携しながら
+Webアプリを構築している
 ```
 
-を同時に学ぶ章だった。
+という全体像も少し見えるようになった。
 
 ---
 
@@ -80,7 +85,7 @@ Spring Boot + HTML/CSS
 3. ユーザー登録画面作成
 4. messages.properties導入
 5. MessageSourceでメッセージ取得
-6. リダイレクト処理
+6. リダイレクト処理（PRGパターン）
 
 という流れで進んだ。
 
@@ -130,19 +135,10 @@ src/main/resources/static
 
 はかなり面倒。
 
-これは、
-
-```text
-昔のJava開発で
-jarを手動管理していた時代
-```
-
-に近い。
-
 Javaでは：
 
 ```text
-jar
+jar手動管理
 ↓
 Maven管理
 ```
@@ -171,6 +167,24 @@ WebJars
 ```
 
 のようなもの。
+
+また復習を通して、
+
+- pom.xml
+- Maven
+- WebJars
+
+の主語が混ざると混乱しやすいことも理解した。
+
+整理すると：
+
+| 名前 | 役割 |
+|---|---|
+| pom.xml | 使いたいライブラリを書く設定ファイル |
+| Maven | pom.xmlを読み取りライブラリをDL・管理するツール |
+| WebJars | フロントエンドライブラリをMaven管理できる仕組み |
+
+である。
 
 ---
 
@@ -234,965 +248,178 @@ messages.propertiesを読む
 
 という流れになっている。
 
----
-
-# ■ この章に取り組む前に必要な事前知識
-
-この章では、
+また復習を通して、
 
 ```text
-Spring Boot
+メッセージプロパティは
+単なる文字列管理だけでなく、
+国際化(i18n)の土台でもある
 ```
 
-だけでなく、
-
-- HTML
-- CSS
-- Bootstrap
-- URL
-- HTTP
-
-なども登場する。
-
-そのため、まずは最低限の用語を整理した。
+ことを理解した。
 
 ---
 
-# ■ ◆ Bootstrap
+# ■ 【疑問】今回作るファイルがhelloパッケージでないのはなぜ？
 
-CSSフレームワーク。
+前章までに作成していた：
 
-- ボタン
-- 入力欄
-- レイアウト
-- 余白
+- /hello
+- /hello/response
+- /hello/db
 
-などを簡単に整えられる。
-
-今回は：
-
-- btn
-- btn-primary
-- form-control
-- mt-3
-
-など大量のBootstrap classが登場した。
-
-Bootstrapとは、
+などは、
 
 ```text
-便利CSS class集
+前章までの学習用サンプル
 ```
 
-のようなもの。
+であり、今回の：
 
----
+- /login
+- /user/signup
 
-# ■ ◆ class属性
-
-HTML部品へ名前を付けるための属性。
-
-主にCSS適用時に使う。
-
-例えば：
-
-```html
-class="form-login"
-```
-
-。
-
-CSS側：
-
-```css
-.form-login {
-    width: 300px;
-}
-```
-
-。
-
-これにより：
+とは、同じSpringBootSampleプロジェクト内に存在しているものの、
 
 ```text
-form-login classを持つ要素
+現時点ではほぼ独立した別ページ
 ```
 
-へCSS適用できる。
+である。
 
-また、
-
-```html
-class="form-group mt-2"
-```
-
-のように、
+ただし完全に無関係ではなく、
 
 ```text
-スペース区切りで複数class指定
+今後統合されていく前段階
 ```
 
-も可能。
+という理解が正しい。
 
 ---
 
-# ■ ◆ Bootstrap class
+# ■ 【疑問】loginにはなぜServiceがない？
 
-Bootstrapがあらかじめ用意しているclass。
-
-例えば：
-
-| class | 役割 |
-|---|---|
-| btn | ボタン化 |
-| btn-primary | 青ボタン |
-| mt-3 | 上余白 |
-| me-3 | 右余白 |
-| text-center | 中央寄せ |
-| form-control | 入力欄デザイン |
-
-など。
-
----
-
-# ■ ◆ HTMLタグ整理
-
-## ◆ formタグ
-
-入力内容送信用エリア。
-
-例えば：
-
-```html
-<form method="post">
-```
-
-なら、
+現時点のLoginControllerは：
 
 ```text
-フォーム送信
+/login にアクセスされたら
+login.html を返すだけ
 ```
 
-を行う。
+だからである。
 
----
-
-## ◆ inputタグ
-
-ユーザー入力部品。
-
-例えば：
-
-```html
-<input type="text">
-```
-
-なら文字入力欄。
-
-```html
-<input type="radio">
-```
-
-ならラジオボタン。
-
----
-
-## ◆ labelタグ
-
-入力欄説明文字。
-
-例えば：
-
-```html
-<label>ユーザーID</label>
-```
-
-。
-
----
-
-## ◆ divタグ
-
-画面部品をまとめるためのタグ。
-
-レイアウト整理によく使う。
-
----
-
-## ◆ aタグ
-
-リンク作成タグ。
-
-例えば：
-
-```html
-<a href="/login">
-```
-
-なら：
+つまり：
 
 ```text
-/login へのリンク
+画面表示だけ
 ```
 
-を作る。
+なのでControllerだけで成立している。
 
----
-
-# ■ ◆ href と th:href
-
-## href
-
-通常HTMLのリンク指定。
-
----
-
-## th:href
-
-Thymeleaf版href。
-
-Spring / Thymeleaf側が：
-
-- URL生成
-- コンテキストパス調整
-
-などを自動処理してくれる。
-
----
-
-# ■ ◆ Maven
-
-Javaのライブラリ管理 + ビルドツール。
-
-昔は：
-
-```text
-jar手動管理
-```
-
-だったが、
-
-Mavenにより：
-
-- DL
-- バージョン管理
-- 依存解決
-
-を自動化できる。
-
----
-
-# ■ ◆ dependencies
-
-pom.xmlで：
-
-```text
-このプロジェクトで使うライブラリ一覧
-```
-
-を書く場所。
-
----
-
-# ■ ◆ WebJars-Locator
-
-WebJars利用時に：
-
-```text
-Bootstrapのバージョン番号省略
-```
-
-を可能にする補助ライブラリ。
-
----
-
-# ■ ◆ Thymeleaf
-
-Spring Bootでよく使われるテンプレートエンジン。
-
-HTML内で：
-
-- Modelデータ表示
-- URL生成
-- ループ
-- 条件分岐
-
-などを行える。
-
----
-
-# ■ ◆ MessageSource
-
-Java側から：
-
-```text
-messages.properties
-```
-
-を読むための仕組み。
-
----
-
-# ■ ◆ 埋め込みパラメータ {}
-
-```properties
-hello={}さん
-```
-
-の：
-
-```text
-{}
-```
-
-は、
-
-```text
-あとで値を入れる場所
-```
-
-。
-
----
-
-# ■ 6-1 ライブラリの使用
-
-この節では、
-
-- WebJars
-- Bootstrap
-- Thymeleaf
-
-を利用しながら、
-
-- ログイン画面
-- ユーザー登録画面
-
-を作成した。
-
----
-
-# ■ ファイル構成
-
-今回は、
-
-- login.controller
-- user.application
-- user.controller
-
-など、
-
-```text
-機能・役割ごと
-```
-
-にパッケージ分割した。
-
----
-
-# ■ 【疑問】login.controller と user を分ける理由
-
-機能単位整理のため。
-
-- login.controller
-    - ログイン機能
-
-- user
-    - ユーザー機能
-
-という構成。
-
----
-
-# ■ 【疑問】user内でapplicationとcontrollerを分ける理由
-
-役割分離のため。
-
-- controller
-    - HTTP受付
-
-- application
-    - 業務処理
-
-を担当している。
-
----
-
-# ■ 【疑問】UserApplicationService の業務処理とは？
-
-今回は：
+一方 user 側では：
 
 ```text
 性別Map生成
 ```
 
-のみ。
-
-実務では：
-
-- DB保存
-- 重複チェック
-- メール送信
-
-などが入る。
-
----
-
-# ■ ログイン画面作成
-
-Controller：
-
-```java
-@GetMapping("/login")
-public String getLogin() {
-    return "login/login";
-}
-```
-
-。
-
-これは：
-
-```text
-templates/login/login.html
-```
-
-表示という意味。
-
----
-
-# ■ WebJarsによるBootstrap読込
-
-```html
-<link rel="stylesheet"
-      th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-```
-
-。
-
-これは：
-
-```text
-MavenがDLしたBootstrap CSS読込
-```
-
-という意味。
-
----
-
-# ■ ◆ WebJars内部構造
-
-Bootstrapは内部的には：
-
-```text
-bootstrap-5.3.3.jar
-└ META-INF
-  └ resources
-```
-
-へ格納される。
-
-Spring Bootでは：
-
-```text
-META-INF/resources
-```
-
-を公開フォルダ扱いするため、
-
-```html
-/webjars/bootstrap/...
-```
-
-だけ書けばアクセスできる。
-
----
-
-# ■ ◆ th:each
-
-Thymeleafで：
-
-```text
-Collectionをループ
-```
-
-するための属性。
-
-Javaの：
-
-```java
-for (item : collection)
-```
-
-に近い。
-
-今回のコード：
-
-```html
-<div th:each="item : ${genderMap}">
-```
-
-。
-
-これは：
-
-```text
-genderMapを1個ずつ取り出し、
-itemへ代入しながらループ
-```
-
-している。
-
----
-
-今回のgenderMap内容：
-
-```text
-{
-  男性 = 1,
-  女性 = 2
-}
-```
-
-。
-
-つまり：
-
-## 1回目
-
-```text
-item.key   = 男性
-item.value = 1
-```
-
-。
-
----
-
-## 2回目
-
-```text
-item.key   = 女性
-item.value = 2
-```
-
-。
-
-その結果、
-
-```html
-<input type="radio">
-<label>男性</label>
-
-<input type="radio">
-<label>女性</label>
-```
-
-が自動生成される。
-
-つまり：
-
-```text
-Map内容を利用して
-ラジオボタンを自動生成
-```
-
-している。
-
----
-
-# ■ ◆ MessageSource
-
-Java側から：
-
-```text
-messages.properties
-```
-
-を読むための仕組み。
-
-例えば：
-
-```java
-messageSource.getMessage(
-    "male",
-    null,
-    null
-);
-```
-
-。
-
-これは：
-
-```properties
-male=男性
-```
-
-を取得している。
-
----
-
-## getMessage() の引数
-
-```java
-getMessage(
-    キー名,
-    埋め込みパラメータ,
-    ロケール
-)
-```
-
-。
-
----
-
-## 第一引数
-
-```java
-"male"
-```
-
-。
-
-messages.propertiesのキー名。
-
----
-
-## 第二引数
-
-```java
-null
-```
-
-。
-
-埋め込みパラメータ。
-
-今回は：
-
-```properties
-male=男性
-```
-
-のように：
-
-```text
-{}を使っていない
-```
-
-ため不要。
-
----
-
-## 第三引数
-
-```java
-null
-```
-
-。
-
-ロケール（国・言語設定）。
-
-今回は未指定。
-
----
-
-# ■ ◆ 埋め込みパラメータ {}
-
-messages.propertiesでは：
-
-```properties
-hello={}さん、こんにちは。今日は{}ですね。
-```
-
-のように：
-
-```text
-{}
-```
-
-を書くことで、
-
-```text
-あとから値を埋め込む場所
-```
-
-を作れる。
-
----
-
-例えばJava側：
-
-```java
-String[] strArray = {
-    "佐藤",
-    "晴れ"
-};
-```
-
-。
-
-すると：
-
-```text
-1個目の{} ← 佐藤
-2個目の{} ← 晴れ
-```
-
-となる。
-
-結果：
-
-```text
-佐藤さん、こんにちは。今日は晴れですね。
-```
-
-。
-
-つまり：
-
-```text
-{}は順番対応
-```
-
-であることが重要。
-
----
-
-# ■ ◆ MessageSource + Map
-
-今回のコード：
-
-```java
-String male =
-    messageSource.getMessage(
-        "male",
-        null,
-        null
-    );
-```
-
-。
-
-これは：
-
-```properties
-male=男性
-```
-
-の：
-
-```text
-値側
-```
-
-を取得している。
-
-つまり：
-
-```java
-male = "男性"
-```
-
-となる。
-
----
-
-その後：
-
-```java
-genderMap.put(male, 1);
-```
-
-を実行。
-
-これにより：
-
-```text
-男性 → 1
-```
-
-をMapへ登録している。
-
----
-
-同様に：
-
-```java
-genderMap.put(female, 2);
-```
-
-で：
-
-```text
-女性 → 2
-```
-
-を登録。
-
----
-
-最終的なMap：
-
-```text
-{
-  男性 = 1,
-  女性 = 2
-}
-```
-
-。
-
-このMapが：
-
-```java
-model.addAttribute(
-    "genderMap",
-    genderMap
-);
-```
-
-によってHTMLへ渡され、
-
-```html
-th:each="item : ${genderMap}"
-```
-
-でループされている。
-
----
-
-# ■ ◆ RequestMapping
-
-クラス側URLとメソッド側URLを合体する仕組み。
-
-例えば：
-
-```java
-@RequestMapping("/user")
-```
-
-+
-
-```java
-@GetMapping("/signup")
-```
-
-。
-
-これにより：
-
-```text
-/user/signup
-```
-
-が完成する。
-
----
-
-つまり：
-
-```text
-クラス側
-↓
-URL共通部分
-
-メソッド側
-↓
-個別URL
-```
-
-という役割分担。
-
----
-
-## なぜ@RequestMappingを使うのか？
-
-技術的には：
-
-```java
-@GetMapping("/user/signup")
-```
-
-だけでも動く。
-
-しかし：
-
-```text
-/user
-```
-
-を毎回書く必要がある。
+という画面表示用データ生成が存在する。
 
 そのため：
 
-```java
-@RequestMapping("/user")
+```text
+Controllerから業務処理を分離
 ```
 
-で共通化する。
+するために、
+
+```text
+UserApplicationService
+```
+
+が存在している。
 
 ---
+
+# ■ 【疑問】なぜMap<String,Integer> genderMap = new LinkedHashMap<>()なのか？
+
+```java
+Map<String, Integer> genderMap =
+    new LinkedHashMap<>();
+```
+
+となっている理由は、
+
+```text
+Mapはインタフェースだから
+```
+
+である。
 
 また：
 
-```text
-「このControllerは
-user機能担当」
+```java
+public LinkedHashMap<String,Integer>
 ```
 
-という整理にもなる。
+にしない理由も重要だった。
+
+これは：
+
+```text
+実装ではなく抽象へ依存する
+```
+
+というJava/Springの重要な設計思想による。
 
 ---
 
-# ■ ◆ @GetMapping は省略版
+# ■ 【疑問】リダイレクト仕様がreturn "/login"しようが、結局LoginControllerへ行くのは同じでは？
 
-```java
-@GetMapping("/signup")
-```
-
-は実際には：
-
-```java
-@RequestMapping(
-    value="/signup",
-    method=RequestMethod.GET
-)
-```
-
-の簡略版。
-
-つまり：
+確かに見た目上は：
 
 ```text
-@GetMapping
-↓
-GET専用RequestMapping
+SignupController → LoginController
 ```
 
-という関係。
+へ移動している。
+
+しかし重要なのは：
+
+```text
+HTTPリクエストの流れ
+```
+
+が異なる点。
 
 ---
 
-同様に：
+## リダイレクトしない場合
 
 ```java
-@PostMapping
-```
-
-は：
-
-```text
-POST専用RequestMapping
+return "login/login";
 ```
 
 。
 
+この場合ブラウザは：
+
+```text
+POST /user/signup
+```
+
+の結果画面を表示している。
+
+そのためF5すると：
+
+```text
+POST /user/signup 再送
+```
+
+となり、二重登録危険がある。
+
 ---
 
-# ■ ◆ リダイレクト
+## リダイレクトする場合
 
 ```java
 return "redirect:/login";
@@ -1200,43 +427,33 @@ return "redirect:/login";
 
 。
 
-意味：
+この場合：
 
 ```text
-/loginへ移動し直す
+POST /user/signup
+↓
+302 Redirect
+↓
+GET /login
+```
+
+という流れになる。
+
+つまり最終的にブラウザが表示しているのは：
+
+```text
+GET /login の結果画面
 ```
 
 。
 
----
-
-通常：
-
-```java
-return "login/login";
-```
-
-なら：
+そのためF5しても：
 
 ```text
-HTML表示
+GET /login
 ```
 
-を行う。
-
-しかし：
-
-```java
-redirect:
-```
-
-を付けると、
-
-```text
-別URLへ再アクセス
-```
-
-になる。
+しか再送されない。
 
 ---
 
@@ -1270,219 +487,14 @@ POST後はリダイレクト
 
 する。
 
----
-
-流れ：
+これを：
 
 ```text
-フォーム送信
-↓
-POST /user/signup
-↓
-redirect:/login
-↓
-GET /login
-↓
-ログイン画面表示
+PRG(Post-Redirect-Get)
 ```
 
-。
+パターンという。
 
----
-
-# ■ ◆ th:href と th:action
-
-Thymeleaf版：
-
-- href
-- action
-
-。
-
-例えば：
-
-```html
-th:href="@{/login}"
-```
-
-。
-
-これは：
-
-```text
-Spring / Thymeleaf側で
-URL生成
-```
-
-を行っている。
-
----
-
-通常：
-
-```html
-href="/login"
-```
-
-でも動く。
-
-しかし：
-
-```html
-th:href="@{/login}"
-```
-
-なら：
-
-- コンテキストパス
-- URL変更
-- 配置変更
-
-などへ安全に対応できる。
-
----
-
-同様に：
-
-```html
-th:action="@{/login}"
-```
-
-も、
-
-```text
-フォーム送信URLを
-Spring側で安全生成
-```
-
-している。
-
----
-
-# ■ ◆ Model
-
-```java
-model.addAttribute(
-    "genderMap",
-    genderMap
-);
-```
-
-。
-
-これは：
-
-```text
-ControllerからHTMLへ
-データを渡す
-```
-
-という意味。
-
----
-
-## 第一引数
-
-```java
-"genderMap"
-```
-
-。
-
-HTML側で使う名前。
-
----
-
-## 第二引数
-
-```java
-genderMap
-```
-
-。
-
-実際のJavaデータ。
-
----
-
-つまり：
-
-```text
-「genderMapという名前で
-MapデータをHTMLへ渡す」
-```
-
-という意味。
-
----
-
-HTML側では：
-
-```html
-${genderMap}
-```
-
-として取得できる。
-
----
-
-# ■ ◆ コンストラクタインジェクション
-
-```java
-@Autowired
-public SignupController(
-    UserApplicationService
-        userApplicationService
-)
-```
-
-。
-
-これは：
-
-```text
-SignupController生成時に、
-必要なServiceをSpringが注入
-```
-
-している。
-
----
-
-つまり：
-
-```java
-private final UserApplicationService
-    userApplicationService;
-```
-
-へ、
-
-Springが：
-
-```text
-UserApplicationServiceインスタンス
-```
-
-を自動で入れている。
-
----
-
-これにより：
-
-```java
-new UserApplicationService()
-```
-
-を自分で書かなくても、
-
-Spring側で：
-
-- 生成
-- 保持
-- 注入
-
-を行ってくれる。
 ---
 
 # ■ 今回特に重要だった理解
@@ -1504,6 +516,8 @@ Javaだけで動いているわけではない
 - Thymeleaf
 - Maven
 - WebJars
+- HTTP
+- URL
 
 などが連携しながら、
 
@@ -1513,14 +527,17 @@ Web画面
 
 を構成していた。
 
-また、
+さらに、復習によって：
 
-```text
-Thymeleafが
-SpringとHTMLを繋いでいる
-```
+- formとaタグの違い
+- GETとPOSTの違い
+- redirectと通常returnの違い
+- RequestMappingの役割
+- Modelとth:eachの関係
+- MapとLinkedHashMapの設計思想
+- label / id / for の関連
 
-ことも理解できた。
+など、曖昧だった部分を整理できた。
 
 ---
 
@@ -1529,12 +546,15 @@ SpringとHTMLを繋いでいる
 - Bootstrapは便利CSS class集
 - WebJarsはCSS/JS版Mavenのようなもの
 - Spring Bootはresourcesを特別扱いする
+- ThymeleafはSpringとHTMLを繋ぐ
 - th:hrefはURL生成支援
 - MessageSourceはproperties読込機構
-- {}は埋め込み用プレースホルダ
+- Localeで国際化対応できる
 - RequestMappingはURL共通化
+- redirectはHTTPリクエスト自体を変える
 - PRGパターンは二重送信防止
-- ThymeleafはHTMLとSpringを繋ぐ
+- label/id/forは相互に関連している
+- Mapを返すのは抽象依存の設計思想
 
 ---
 
@@ -1551,28 +571,26 @@ SpringとHTMLを繋いでいる
 
 など、
 
-Java以外の知識が大量に登場した。
+```text
+Java以外の知識
+```
+
+が大量に登場した。
 
 特に：
 
 ```text
-どこまでがSpringで、
-どこまでがHTMLなのか
+どこまでがSpring Bootで、
+どこからがHTML/HTTPなのか
 ```
 
-が混乱しやすかった。
+の切り分けが最初は非常に難しかった。
 
-また、
+しかし復習によって、
 
-教科書では：
+```text
+Spring BootはHTTPリクエストを受け取り、
+Thymeleafを通してHTMLへデータを渡している
+```
 
-- div
-- input
-- label
-- class
-- href
-
-など、
-
-HTML基礎部分をかなり省略していたため、
-そこを自分で補完しながら理解を進めた。
+という全体像が少し理解できるようになった。
