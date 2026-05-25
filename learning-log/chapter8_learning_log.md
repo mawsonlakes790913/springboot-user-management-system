@@ -550,6 +550,55 @@ Validation
 
 ---
 
+# ■ 【補足】th:errors の実際の役割
+
+今回新たに理解できたのは、
+
+```text
+th:errors は
+BindingResult を自動参照している
+```
+
+という点。
+
+HTML側では：
+
+```html
+<div th:errors="*{userId}"></div>
+```
+
+と書くだけで、
+
+```text
+「userId に関するエラーを表示」
+```
+
+できる。
+
+内部では：
+
+```text
+@Validated
+↓
+BindingResultへエラー保存
+↓
+th:errors が自動参照
+```
+
+していた。
+
+つまり：
+
+```text
+Controller側で
+エラーメッセージ文字列を
+直接HTMLへ渡しているわけではない
+```
+
+という理解が重要だった。
+
+---
+
 # ■ 【疑問】BindingErrorとValidationErrorの違い
 
 最初かなり混乱した。
@@ -706,6 +755,41 @@ min
 
 ---
 
+# ■ 【補足】エラーメッセージ設定方法の違い
+
+ValidationMessages.properties には、
+
+```properties
+NotBlank.signupForm.userId=
+NotBlank.userId=
+```
+
+など複数の書き方が存在した。
+
+最初は違いが曖昧だったが、
+
+```text
+どの範囲へ適用するか
+```
+
+の違いだった。
+
+| パターン | 適用範囲 |
+|---|---|
+| `NotBlank.signupForm.userId` | 特定Form限定 |
+| `NotBlank.userId` | 全Form共通 |
+| 独自キー | 個別指定 |
+
+つまり：
+
+```text
+メッセージ共通化の粒度
+```
+
+を調整していた。
+
+---
+
 # ■ 8-3 カスタムバリデーション（単項目）
 
 この節では、
@@ -766,6 +850,40 @@ validator
 - `LengthMinValidator.java`
 
 を作成。
+
+---
+
+# ■ 【疑問】1つのValidationなのにファイルが2つある理由
+
+最初、
+
+```text
+LengthMin.java
+LengthMinValidator.java
+```
+
+の2つが必要な理由が分からなかった。
+
+しかし役割が全く別だった。
+
+| ファイル | 役割 |
+|---|---|
+| `LengthMin.java` | アノテーション定義 |
+| `LengthMinValidator.java` | 実際の判定処理 |
+
+つまり：
+
+```text
+「目印」
+```
+
+と
+
+```text
+「実際の判定」
+```
+
+を分離していた。
 
 ---
 
@@ -856,6 +974,58 @@ Javaアノテーション独自文法
 
 ---
 
+# ■ 【補足】@interface の意味
+
+```java
+public @interface LengthMin
+```
+
+は、
+
+```text
+LengthMinという
+アノテーション型を定義
+```
+
+している。
+
+つまり：
+
+```text
+classではなく、
+アノテーション専用型
+```
+
+を作っていた。
+
+---
+
+# ■ 【補足】@Documented の意味
+
+```java
+@Documented
+```
+
+は、
+
+```text
+Javadoc生成時に
+アノテーション情報も出力
+```
+
+する指定。
+
+つまり：
+
+```text
+API仕様書へ
+このアノテーション情報も含める
+```
+
+という意味だった。
+
+---
+
 # ■ @Constraint
 
 ```java
@@ -884,6 +1054,194 @@ Validator
 ```
 
 を紐づけていた。
+
+---
+
+# ■ 【補足】@Target の意味
+
+```java
+@Target(ElementType.FIELD)
+```
+
+は、
+
+```text
+このアノテーションを
+どこへ付けられるか
+```
+
+を制御していた。
+
+今回は：
+
+```text
+FIELD
+```
+
+なので、
+
+```text
+フィールド専用
+```
+
+だった。
+
+---
+
+# ■ 【補足】@Retention の意味
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+```
+
+は、
+
+```text
+実行時まで
+アノテーション情報を保持
+```
+
+する設定。
+
+Validationは：
+
+```text
+実行時に
+アノテーションを読み取る
+```
+
+必要があるため、
+
+```text
+RUNTIME
+```
+
+が必要だった。
+
+---
+
+# ■ 【疑問】message() の default の意味
+
+```java
+String message()
+default "{length.min.message}";
+```
+
+。
+
+最初：
+
+```text
+default が何を意味するのか
+```
+
+分からなかった。
+
+しかしこれは：
+
+```text
+message省略時の初期値
+```
+
+だった。
+
+つまり：
+
+```java
+@LengthMin(min = 5)
+```
+
+だけ書いた場合でも、
+
+```text
+"{length.min.message}"
+```
+
+が自動利用される。
+
+---
+
+# ■ 【補足】groups() の意味
+
+```java
+Class<?>[] groups() default {};
+```
+
+。
+
+これは：
+
+```text
+Validationグループ制御
+```
+
+用。
+
+例えば：
+
+```text
+基本チェック
+↓
+応用チェック
+```
+
+のように、
+
+```text
+Validationを段階実行
+```
+
+できる。
+
+また：
+
+```text
+default {}
+```
+
+は、
+
+```text
+どのグループにも属さない
+```
+
+状態を意味していた。
+
+---
+
+# ■ 【補足】payload() の意味
+
+```java
+Class<? extends Payload>[] payload()
+default {};
+```
+
+。
+
+これは：
+
+```text
+Validationへ追加情報を持たせる仕組み
+```
+
+。
+
+例えば：
+
+- Warning
+- Fatal
+- ログ分類
+
+など。
+
+つまり：
+
+```text
+単なるOK/NG以外の
+メタ情報
+```
+
+を持たせられる。
 
 ---
 
@@ -932,6 +1290,44 @@ min = 5
 
 ---
 
+# ■ 【疑問】initialize() は何のために必要なのか？
+
+最初、
+
+```text
+なぜ直接 min を使えない？
+```
+
+と感じた。
+
+しかし：
+
+```text
+アノテーションで設定された値
+```
+
+を、
+
+```text
+Validator側へ受け渡す
+```
+
+必要があった。
+
+つまり：
+
+```text
+@LengthMin(min = 3)
+↓
+initialize() で受け取る
+↓
+Validator内部フィールドへ保存
+```
+
+という流れだった。
+
+---
+
 # ■ isValid()
 
 ```java
@@ -957,6 +1353,48 @@ return false;
 ```
 
 していた。
+
+---
+
+# ■ 【疑問】String value の正体
+
+最初、
+
+```java
+isValid(String value, ...)
+```
+
+の：
+
+```text
+value がどこから来るのか
+```
+
+分からなかった。
+
+しかし実際には：
+
+```text
+フォームへ入力された
+対象フィールドの値
+```
+
+だった。
+
+つまり：
+
+```java
+@LengthMin
+private String userName;
+```
+
+なら、
+
+```text
+userName の入力値
+```
+
+が自動で渡されていた。
 
 ---
 
