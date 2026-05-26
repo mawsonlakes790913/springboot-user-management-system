@@ -151,6 +151,98 @@ list.html
 
 という役割分担になっていた。
 
+また、
+
+```text
+UserListController.java
+```
+
+は、
+
+```text
+/user/list にアクセスされた時に
+list.html を返す
+```
+
+ためのコントローラーであり、
+
+```text
+list.css
+```
+
+は、
+
+```text
+ユーザー一覧画面専用の装飾
+```
+
+だった。
+
+つまり今回は、
+
+```text
+共通部品だけではなく、
+「そのレイアウトを実際に使う画面」
+```
+
+も同時に作成していた。
+
+---
+
+# ■ 【疑問】なぜ header.css や menu.css がないのか？
+
+最初、
+
+```text
+header.html や menu.html があるなら、
+専用CSSも必要では？
+```
+
+と思った。
+
+しかし今回は：
+
+```text
+Bootstrap のクラスだけで
+見た目が成立している
+```
+
+ため、
+
+```text
+header.css
+menu.css
+```
+
+を作成していなかった。
+
+例えば：
+
+```html
+class="navbar navbar-dark bg-dark"
+```
+
+や、
+
+```html
+class="nav nav-pills"
+```
+
+などは、
+
+```text
+Bootstrap が提供しているCSS
+```
+
+であり、
+
+```text
+Bootstrapだけで
+ナビゲーションの見た目が完成している
+```
+
+状態だった。
+
 ---
 
 # ■ 【補足】今回のログイン処理
@@ -271,6 +363,165 @@ divタグの中へHTML追加
 
 ---
 
+# ■ 【疑問】replaceは置き換える側HTMLが完全体でないとダメ？
+
+復習して理解が深まった部分として、
+
+```text
+replace と insert は、
+「読み込まれる側HTMLが
+どこまで完成している必要があるか」
+```
+
+にも関係していた。
+
+### replace
+
+```text
+layout.html 側のタグを
+完全に置き換える
+```
+
+ため、
+
+```text
+読み込まれる側HTMLが
+完成済み部品である必要が強い
+```
+
+。
+
+例えば：
+
+```html
+<span layout:fragment="header"></span>
+```
+
+しかなければ、
+
+```text
+最終HTMLも span のみ
+```
+
+になる。
+
+つまり：
+
+```text
+replace は
+「完成済み部品を丸ごと交換」
+```
+
+という感覚だった。
+
+### insert
+
+一方 insert は、
+
+```text
+layout.html 側の外枠を残したまま
+中へHTMLを入れる
+```
+
+。
+
+つまり：
+
+```text
+menu.html 側が
+中身だけでも成立する
+```
+
+ケースがある。
+
+```html
+layout.html
+<div class="menu-area"
+     layout:insert="~{layout/menu::menu}">
+</div>
+```
+
+```html
+menu.html
+<ul layout:fragment="menu">
+</ul>
+```
+
+最終HTML：
+
+```html
+<div class="menu-area">
+    <ul>
+    </ul>
+</div>
+```
+
+つまり：
+
+```text
+外側レイアウトは
+layout.html 側が保持
+```
+
+している。
+
+---
+
+# ■ 【重要】insertでもreplaceでも差し込む側はfragment
+
+今回かなり混乱したのが：
+
+```text
+差し込まれる側
+↓
+replace / insert
+
+差し込む側
+↓
+fragment
+```
+
+という構造だった。
+
+最初は：
+
+```text
+「insertなのに
+なぜfragment？」
+```
+
+と思った。
+
+しかし実際には、
+
+```text
+replace / insert は
+「どう読み込むか」
+
+fragment は
+「どの部分を使うか」
+```
+
+という役割分担だった。
+
+つまり：
+
+```html
+layout:insert="~{layout/menu::menu}"
+```
+
+は、
+
+```text
+menu.html の
+fragment="menu"
+を取得する
+```
+
+という意味だった。
+
+---
+
 # ■ 【疑問】layout:fragment が最も難しかった
 
 今回の章で最も難しかったのは：
@@ -371,6 +622,180 @@ content は画面ごとに変化
 
 ---
 
+# ■ 【疑問】複数HTMLに同じfragment名があって衝突しないのか？
+
+最初は、
+
+```text
+list.html
+signup.html
+```
+
+など、
+
+複数HTMLに：
+
+```html
+layout:fragment="content"
+```
+
+が存在していることに混乱した。
+
+しかし実際には：
+
+```text
+現在表示しているHTMLだけ
+```
+
+がレイアウトへ組み込まれる。
+
+つまり：
+
+```text
+Controller
+↓
+どの画面を返すか決定
+↓
+そのHTMLだけがlayoutへ適用
+```
+
+という流れだった。
+
+そのため：
+
+```text
+fragment名が同じでも
+衝突しない
+```
+
+。
+
+---
+
+# ■ 【疑問】html側にはfragmentしか書いてないのに、Springはどうやって判別してる？
+
+今回復習してかなり理解が深まったのがここだった。
+
+最初は：
+
+```text
+fragmentしか書いてないのに、
+Springは
+replace用なのか
+decorate用なのか
+どうやって判別してる？
+```
+
+と疑問だった。
+
+しかし実際には：
+
+```text
+fragment自身には役割はない
+```
+
+。
+
+重要なのは：
+
+```text
+呼び出し側
+```
+
+だった。
+
+つまり：
+
+```text
+replace / insert / decorate
+```
+
+という：
+
+```text
+「呼び出し命令」
+```
+
+を Thymeleaf が見て、
+
+```text
+キー名一致するfragment
+```
+
+を探して適用していた。
+
+復習前は：
+
+```text
+fragment自体に
+特別な意味がある
+```
+
+ように感じていたが、
+
+復習後は：
+
+```text
+fragmentは
+「名前付きHTML部品」
+```
+
+であり、
+
+```text
+replace / insert / decorate が
+その使い方を決めている
+```
+
+と理解できた。
+
+また、
+
+```text
+雑に言えば、
+呼び出している側が何であろうと
+キー名一致するものを適用している
+```
+
+という感覚もかなり理解しやすかった。
+
+---
+
+# ■ 【疑問】なぜ layout:decorate は冒頭で、fragment は body に書く？
+
+これも最初かなり混乱した。
+
+しかし整理すると：
+
+| 場所 | 役割 |
+|---|---|
+| `<html layout:decorate="...">` | どのレイアウトを使うか |
+| `<div layout:fragment="content">` | どこを差し込むか |
+
+だった。
+
+つまり：
+
+```text
+decorate
+↓
+ページ全体設定
+```
+
+なので htmlタグ。
+
+一方：
+
+```text
+fragment
+↓
+ページの一部分指定
+```
+
+なので body内だった。
+
+---
+
 # ■ 【補足】headタグ自動結合がかなり便利だった
 
 今回かなり便利だと感じたのは：
@@ -416,6 +841,71 @@ Layout Dialect の大きな利点
 ```
 
 だった。
+
+---
+
+# ■ 【補足】<nav>タグについて
+
+今回、
+
+```html
+<nav>
+```
+
+が多用されていた。
+
+最初は：
+
+```text
+「divではダメなの？」
+```
+
+と思った。
+
+しかし `<nav>` は、
+
+```text
+ナビゲーション領域
+```
+
+を意味するセマンティックタグだった。
+
+つまり：
+
+```text
+サイト移動
+メニュー
+ログアウト
+```
+
+など、
+
+```text
+ページ移動や操作のための領域
+```
+
+を表している。
+
+特に：
+
+```text
+header.html
+menu.html
+```
+
+は、
+
+```text
+サイト全体の移動・操作
+```
+
+を担当しているため、
+
+```html
+<nav>
+```
+
+が自然だった。
 
 ---
 
@@ -496,6 +986,23 @@ header/menu/list
 
 をかなり具体的に理解できた。
 
+また復習によって、
+
+```text
+replace
+insert
+fragment
+```
+
+は、
+
+```text
+最初に感じたほど複雑なものではなく、
+「キー名一致」
+```
+
+という非常にシンプルな考え方を中心に動いていることが理解できた。
+
 ---
 
 # ■ 学び・気づき
@@ -508,6 +1015,9 @@ header/menu/list
 - decorate はレイアウト指定
 - headタグは自動マージされる
 - 開発者ツールで生成後HTML確認できる
+- fragment自体は「名前付きHTML部品」
+- replace/insert/decorate が使い方を決めている
+- Layout Dialect により画面管理がかなり効率化される
 
 ---
 
