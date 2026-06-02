@@ -1,5 +1,6 @@
 package com.example.demo.hello;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HelloController {
+
+    @Autowired
+    private SampleService sampleService;
 
     @GetMapping("/hello")
     public String getHello() {
@@ -21,5 +25,15 @@ public class HelloController {
         model.addAttribute("response", text1);
         // response.htmlに画面遷移
         return "hello/response";
+    }
+
+    @GetMapping("/hello/db")
+    public String getSample(@RequestParam("id") String id, Model model) {
+        // 1件検索
+        Sample sample = sampleService.getSample(id);
+        // 検索結果をModelに登録
+        model.addAttribute("sample", sample);
+        // db.htmlに画面遷移
+        return "hello/db";
     }
 }
