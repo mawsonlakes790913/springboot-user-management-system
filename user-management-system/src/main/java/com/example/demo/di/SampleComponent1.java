@@ -1,8 +1,14 @@
 package com.example.demo.di;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component("SampleComponent1")
+@Slf4j
 public class SampleComponent1 implements SampleComponent {
     /** getStrの戻り値 */
     private String str = "SampleComponent1";
@@ -10,5 +16,15 @@ public class SampleComponent1 implements SampleComponent {
     @Override
     public String getStr() {
         return this.str;
+    }
+
+    @PostConstruct
+    public void init() {
+        log.info(str + " init");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        log.info(str + " preDestroy");
     }
 }
