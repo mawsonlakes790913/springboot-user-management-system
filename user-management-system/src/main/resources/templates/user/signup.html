@@ -9,57 +9,47 @@
   <!-- JS読込 -->
   <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
   <title th:text="#{user.signup.title}"></title>
-  <!-- <title>ユーザー登録</title> -->
 </head>
 <body class="bg-light">
-  <form id="signup-form" method="post" action="/user/signup" class="form-signup mt-5">
+  <form id="signup-form" method="post" action="/user/signup" class="form-signup mt-5" th:object="${signupForm}">
     <h2 class="text-center" th:text="#{user.signup.title}"></h2>
-    <!-- <h2 class="text-center">ユーザー登録</h2> -->
     <!-- ユーザーID -->
     <div class="form-group">
       <label for="userId" th:text="#{userId}"></label>
-      <!-- <label for="userId">ユーザーID</label> -->
-      <input type="text" id="userId" class="form-control">
+      <input type="text" id="userId" class="form-control" th:field="*{userId}">
     </div>
     <!-- パスワード -->
     <div class="form-group">
       <label for="password" th:text="#{password}"></label>
-      <!-- <label for="password">パスワード</label> -->
-      <input type="text" id="password" class="form-control">
+      <input type="text" id="password" class="form-control" th:field="*{password}">
     </div>
     <!-- ユーザー名 -->
     <div class="form-group">
       <label for="userName" th:text="#{userName}"></label>
-      <!-- <label for="userName">ユーザー名</label> -->
-      <input type="text" id="userName" class="form-control">
+      <input type="text" id="userName" class="form-control" th:field="*{userName}">
     </div>
     <!-- 誕生日 -->
     <div class="form-group">
       <label for="birthday" th:text="#{birthday}"></label>
-      <!-- <label for="birthday">誕生日</label> -->
-       <input type="text" id="birthday" class="form-control" placeholder="YYYY/MM/DD">
+      <input type="text" id="birthday" class="form-control" placeholder="YYYY/MM/DD" th:field="*{birthday}">
     </div>
     <!-- 年齢 -->
     <div class="form-group">
       <label for="age" th:text="#{age}"></label>
-      <!-- <label for="age">年齢</label> -->
-      <input type="text" id="age" class="form-control">
+      <input type="text" id="age" class="form-control" th:field="*{age}">
     </div>
     <!-- 性別 -->
     <div class="form-group mt-2">
       <label class="me-3" th:text="#{gender}"></label>
-      <!-- <label class="me-3">性別</label> -->
       <div th:each="item : ${genderMap}" class="form-check-inline">
-        <input type="radio" class="form-check-input" th:value="${item.value}">
+        <input type="radio" class="form-check-input" th:value="${item.value}" th:field="*{gender}">
         <label class="form-check-label" th:text="${item.key}"></label>
       </div>
     </div>
     <!-- 登録ボタン -->
     <input type="submit" th:value="#{user.signup.btn}" class="btn btn-primary w-100 mt-4">
-    <!-- <input type="submit" value="ユーザー登録" class="btn btn-primary w-100 mt-4"> -->
     <div class="text-center mt-2">
       <a th:href="@{/login}" th:text="#{link.login}"></a>
-      <!-- <a th:href="@{/login}">ログインはこちら</a> --> 
     </div>
   </form>
   </body>
