@@ -16,3 +16,6 @@ spring:
   h2:
     console:
       enabled: true
+  # Messageプロパティ
+  messages:
+    basename: messages,ValidationMessages
