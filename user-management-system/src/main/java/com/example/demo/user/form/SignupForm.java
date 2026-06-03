@@ -5,6 +5,7 @@ import java.util.Date;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.example.demo.validator.BirthdayAge;
 import com.example.demo.validator.LengthMin;
 
 import jakarta.validation.constraints.Email;
@@ -16,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
+@BirthdayAge(birthdayFieldName = "birthday", ageFieldName = "age")
 @Data
 public class SignupForm {
     @NotBlank
