@@ -23,6 +23,9 @@ spring:
 # MyBatis
 mybatis:
   mapper-locations: classpath*:/mapper/h2/*.xml
+  type-aliases-package: com.example.demo.*
+  configuration:
+    map-underscore-to-camel-case: true
 
 # Log Level
 logging:
