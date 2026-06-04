@@ -2,6 +2,9 @@ package com.example.demo.user.domain.service.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.user.domain.model.MUser;
@@ -28,8 +31,13 @@ public class UserServiceImpl implements UserService {
 
     /** ユーザー取得 */
     @Override
-    public List<MUser> getUsers(MUser user) {
-        return mapper.findMany(user);
+    public Page<MUser> getUsers(MUser user, Pageable pageable) {
+        // ユーザー一覧取得
+        List<MUser> userList = mapper.findMany(user, pageable);
+        // ユーザー一覧の件数取得
+        int count = mapper.count(user);
+        // Pageのインスタンス生成
+        return new PageImpl<MUser>(userList, pageable, count);
     }
 
     @Override

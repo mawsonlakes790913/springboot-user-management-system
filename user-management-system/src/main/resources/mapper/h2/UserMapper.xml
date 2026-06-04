@@ -41,6 +41,22 @@
       )
   </insert>
   
+  <!-- ユーザー件数取得 -->
+  <select id="count" resultType="int">
+      SELECT
+          count(*)
+      FROM
+          m_user
+      <where>
+        <if test="userId != null">
+          user_id like '%' || #{userId} || '%'
+        </if>
+        <if test="userName != null">
+          AND user_name like '%' || #{userName} || '%'
+        </if>
+      </where>
+  </select>
+  
   <!-- ユーザー複数件取得 -->
   <select id="findMany" resultType="MUser">
       SELECT
@@ -48,13 +64,17 @@
       FROM
           m_user
       <where> 
-        <if test="userId != null">
-          user_id like '%' || #{userId} || '%'
+        <if test="user.userId != null">
+          user_id like '%' || #{user.userId} || '%'
         </if>
-        <if test="userName != null">
-          and user_name like '%' || #{userName} || '%'
+        <if test="user.userName != null">
+          AND user_name like '%' || #{user.userName} || '%'
         </if>
       </where>
+      <if test="pageable != null and pageable.pageSize > 0">
+          LIMIT #{pageable.pageSize}
+          OFFSET #{pageable.offset}
+      </if>
   </select>
   
   <!-- ユーザー1件検索 -->

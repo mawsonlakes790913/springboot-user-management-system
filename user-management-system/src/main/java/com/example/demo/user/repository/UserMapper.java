@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Pageable;
 
 import com.example.demo.user.domain.model.MUser;
 
@@ -12,8 +13,11 @@ public interface UserMapper {
     /** ユーザー登録 */
     public int insertOne(MUser user);
 
+    /** ユーザー件数取得 */
+    public int count(MUser user);
+
     /** ユーザー取得 */
-    public List<MUser> findMany(MUser user);
+    public List<MUser> findMany(MUser user, Pageable pageable);
 
     /** ユーザー取得（1件）*/
     public MUser findOne(String userId);
