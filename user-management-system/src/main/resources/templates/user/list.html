@@ -12,6 +12,23 @@
     <div class="header border-bottom">
       <h1 class="h2">ユーザー一覧画面</h1>
     </div>
+    <!-- 検索 -->
+    <div class="mb-4">
+      <form id="user-search-form" method="get" th:action="@{/user/list}"
+          class="row" th:object="${userListForm}">
+        <div class="col-sm">
+          <input type="text" class="form-control" placeholder="ユーザーID" th:field="*{userId}">
+        </div>
+        <div class="col-sm">
+          <input type="text" class="form-control" placeholder="ユーザー名" th:field="*{userName}">
+        </div>
+        <div class="col-sm">
+          <button class="btn btn-primary" type="submit">
+            検索
+          </button>
+        </div>
+      </form>
+    </div>
     <!-- 一覧表示 -->
     <div>
       <table class="table table-striped table-bordered table-hover">

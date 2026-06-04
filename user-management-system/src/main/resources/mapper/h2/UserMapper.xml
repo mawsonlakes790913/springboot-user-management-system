@@ -47,6 +47,14 @@
           *
       FROM
           m_user
+      <where> 
+        <if test="userId != null">
+          user_id like '%' || #{userId} || '%'
+        </if>
+        <if test="userName != null">
+          and user_name like '%' || #{userName} || '%'
+        </if>
+      </where>
   </select>
   
   <!-- ユーザー1件検索 -->
