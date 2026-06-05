@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.user.domain.model.MUser;
 import com.example.demo.user.domain.service.UserService;
@@ -51,9 +52,12 @@ public class UserServiceImpl implements UserService {
         log.info("更新件数={}", count);
     }
 
+    @Transactional
     @Override
     public void deleteUserOne(String userId) {
         int count = mapper.deleteOne(userId);
         log.info("削除件数={}", count);
+        // わざと例外を発生させる
+        // int i = 1 / 0;
     }
 }
