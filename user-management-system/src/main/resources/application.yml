@@ -19,6 +19,10 @@ spring:
   # Messageプロパティ
   messages:
     basename: messages,ValidationMessages
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: none
 
 # MyBatis
 mybatis:
@@ -31,3 +35,9 @@ mybatis:
 logging:
   level:
     '[com.example.demo]': debug
+    # JPAのログ出力
+    '[org.hibernate]':
+      SQL: debug
+      type:
+        '[descriptor.sql.BasicBinder]': trace
+        EnumType: trace
