@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,8 +42,16 @@ public class UserServiceImpl2 implements UserService {
     /** ユーザー取得 */
     @Override
     public Page<MUser> getUsers(MUser user, Pageable pageable) {
+        // 検索条件
+        ExampleMatcher matcher = ExampleMatcher.matchingAll() // and条件
+                // userIdの部分一致
+                .withMatcher("userId", ExampleMatcher.GenericPropertyMatchers.contains())
+                // userNameの部分一致
+                .withMatcher("userName", ExampleMatcher.GenericPropertyMatchers.contains())
+                .withIgnoreCase(); // 大文字・小文字を無視
+
         // ユーザー一覧取得
-        Page<MUser> userList = repository.findAll(pageable);
+        Page<MUser> userList = repository.findAll(Example.of(user, matcher), pageable);
         return userList;
     }
 
