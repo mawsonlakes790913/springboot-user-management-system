@@ -27,8 +27,8 @@
   
   <!-- マッピング定義（給料） -->
   <resultMap type="com.example.demo.user.domain.model.Salary" id="salary">
-    <id column="user_id" property="userId" />
-    <id column="year_month" property="yearMonth" />
+    <id column="user_id" property="salaryKey.userId" />
+    <id column="year_month" property="salaryKey.yearMonth" />
     <result column="salary" property="salary" />
   </resultMap>
 
