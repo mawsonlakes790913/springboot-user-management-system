@@ -22,7 +22,14 @@ public class SecurityConfig {
                         .requestMatchers("/user/signup").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .usernameParameter("userId")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/user/list")
+                        .failureUrl("/login?error")
+                        .permitAll());
         // CSRFを無効（一時的）
         http.csrf(csrf -> csrf.disable());
         // ヘッダー設定
