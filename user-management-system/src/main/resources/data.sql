@@ -12,17 +12,17 @@ INSERT INTO m_user (
   , department_id
   , role
 ) VALUES
-  ('system@example.co.jp', 'password', 'システム管理者', '2000-01-01', 24, 1, 1, 'ROLE_ADMIN')
-, ('user1@example.co.jp', 'password', 'ユーザー1', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user2@example.co.jp', 'password', 'ユーザー2', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user3@example.co.jp', 'password', 'ユーザー3', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user4@example.co.jp', 'password', 'ユーザー4', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user5@example.co.jp', 'password', 'ユーザー5', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user6@example.co.jp', 'password', 'ユーザー6', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user7@example.co.jp', 'password', 'ユーザー7', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user8@example.co.jp', 'password', 'ユーザー8', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user9@example.co.jp', 'password', 'ユーザー9', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
-, ('user10@example.co.jp', 'password', 'ユーザー10', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+  ('system@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'システム管理者', '2000-01-01', 24, 1, 1, 'ROLE_ADMIN')
+, ('user1@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー1', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user2@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー2', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user3@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー3', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user4@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー4', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user5@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー5', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user6@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー6', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user7@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー7', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user8@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー8', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user9@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー9', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
+, ('user10@example.co.jp', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ユーザー10', '2000-01-01', 24, 2, 2, 'ROLE_GENERAL')
 ;
 
 /* 部署マスタ */
