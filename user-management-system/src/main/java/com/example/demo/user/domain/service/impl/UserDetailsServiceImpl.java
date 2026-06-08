@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.user.domain.model.LoginUser;
 import com.example.demo.user.domain.model.MUser;
 import com.example.demo.user.domain.service.UserService;
 
@@ -38,9 +38,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(authority);
         // UserDetails生成
-        UserDetails userDetails = new User(loginUser.getUserId(),
+        UserDetails userDetails = new LoginUser(loginUser.getUserId(),
                 loginUser.getPassword(),
-                authorities);
+                authorities,
+                loginUser.getUserName());
 
         return userDetails;
     }

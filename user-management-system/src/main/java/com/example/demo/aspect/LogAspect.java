@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.user.domain.model.LoginUser;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Aspect
@@ -51,6 +53,13 @@ public class LogAspect {
         // 認証情報取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
+
+        // ユーザー名出力
+        String authClassName = authentication.getPrincipal().getClass().getSimpleName();
+        if ("LoginUser".equals(authClassName)) {
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            log.info("ユーザー名={}", loginUser.getDisplayUserName());
+        }
 
         // 開始ログ出力
         log.info("ユーザーID={}, メソッド開始(Controller): {}", userId, jp.getSignature());
