@@ -40,11 +40,16 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .defaultSuccessUrl("/user/list")
                         .failureUrl("/login?error")
-                        .permitAll());
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout"));
+
         // CSRFを無効（一時的）
         http.csrf(csrf -> csrf.disable());
         // ヘッダー設定
         http.headers(headers -> headers.frameOptions(option -> option.disable()));
+
         return http.build();
     }
 
