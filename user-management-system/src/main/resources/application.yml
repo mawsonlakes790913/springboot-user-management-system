@@ -41,3 +41,9 @@ logging:
       type:
         '[descriptor.sql.BasicBinder]': trace
         EnumType: trace
+
+# Tomcat設定
+server:
+  servlet:
+    session:
+      timeout: 30m
