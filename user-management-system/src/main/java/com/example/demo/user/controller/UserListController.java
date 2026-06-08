@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,13 @@ import com.example.demo.user.domain.service.UserService;
 import com.example.demo.user.form.UserListForm;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @SessionAttributes(types = UserListForm.class)
+@Slf4j
 public class UserListController {
 
     /** セッションに登録 */
@@ -36,7 +40,9 @@ public class UserListController {
     /** ユーザー一覧画面を表示 */
     @GetMapping("/list")
     public String getUserList(Model model, @ModelAttribute UserListForm form,
-            @PageableDefault(page = 0, size = 3) Pageable pageable) {
+            @PageableDefault(page = 0, size = 3) Pageable pageable,
+            @AuthenticationPrincipal UserDetails loginUser) {
+        log.info("ユーザーID={}", loginUser.getUsername());
         // formをMUserクラスに変換
         MUser user = modelMapper.map(form, MUser.class);
         // ユーザー一覧取得
