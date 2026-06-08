@@ -46,9 +46,9 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout"));
 
         // CSRFを無効（一時的）
-        http.csrf(csrf -> csrf.disable());
+        // http.csrf(csrf -> csrf.disable());
         // ヘッダー設定
-        http.headers(headers -> headers.frameOptions(option -> option.disable()));
+        // http.headers(headers -> headers.frameOptions(option -> option.disable()));
 
         return http.build();
     }
