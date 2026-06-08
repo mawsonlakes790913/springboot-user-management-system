@@ -2,6 +2,7 @@ package com.example.demo.user.domain.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.user.domain.model.MUser;
 
@@ -19,5 +20,6 @@ public interface UserService {
     public void updateUserOne(String userId, String password, String userName);
 
     /** ユーザー削除（1件)*/
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUserOne(String userId);
 }
