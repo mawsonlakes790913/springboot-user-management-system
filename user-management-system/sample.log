@@ -1,0 +1,44 @@
+2026-06-08T23:47:51.493+09:00  INFO 6367 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 0 JDBC repository interfaces.
+2026-06-08T23:47:51.517+09:00  INFO 6367 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-08T23:47:51.520+09:00  INFO 6367 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-08T23:47:51.563+09:00  INFO 6367 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 2 JPA repository interfaces.
+2026-06-08T23:47:52.986+09:00  INFO 6367 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-08T23:47:53.004+09:00  INFO 6367 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T23:47:53.004+09:00  INFO 6367 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026-06-08T23:47:53.050+09:00  INFO 6367 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-08T23:47:53.050+09:00  INFO 6367 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2922 ms
+2026-06-08T23:47:53.259+09:00  INFO 6367 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-08T23:47:53.528+09:00  INFO 6367 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-06-08T23:47:53.537+09:00  INFO 6367 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-08T23:47:53.682+09:00  INFO 6367 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-08T23:47:53.776+09:00  INFO 6367 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.42.Final
+2026-06-08T23:47:53.825+09:00  INFO 6367 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-08T23:47:54.201+09:00  INFO 6367 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-08T23:47:54.324+09:00  INFO 6367 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-08T23:47:55.762+09:00  INFO 6367 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-08T23:47:55.767+09:00  INFO 6367 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-08T23:47:55.854+09:00  INFO 6367 --- [restartedMain] com.example.demo.di.SampleComponent1     : SampleComponent1 init
+2026-06-08T23:47:55.860+09:00  INFO 6367 --- [restartedMain] com.example.demo.di.SampleComponent2     : SampleComponent2 init
+2026-06-08T23:47:56.423+09:00  INFO 6367 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-08T23:47:58.878+09:00  WARN 6367 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-08T23:48:00.021+09:00  INFO 6367 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-06-08T23:48:02.309+09:00  INFO 6367 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-06-08T23:48:02.839+09:00  INFO 6367 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-06-08T23:48:03.087+09:00  INFO 6367 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-06-08T23:48:03.181+09:00  INFO 6367 --- [restartedMain] c.e.d.UserManagementSystemApplication    : Started UserManagementSystemApplication in 14.294 seconds (process running for 15.505)
+2026-06-08T23:51:10.824+09:00  INFO 6367 --- [RMI TCP Connection(8)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-08T23:51:10.867+09:00  INFO 6367 --- [RMI TCP Connection(8)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-08T23:51:10.920+09:00  INFO 6367 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-06-08T23:51:10.938+09:00  INFO 6367 --- [RMI TCP Connection(8)-127.0.0.1] com.example.demo.di.SampleComponent2     : SampleComponent2 preDestroy
+2026-06-08T23:51:10.938+09:00  INFO 6367 --- [RMI TCP Connection(8)-127.0.0.1] com.example.demo.di.SampleComponent1     : SampleComponent1 preDestroy
+2026-06-08T23:51:10.939+09:00  INFO 6367 --- [RMI TCP Connection(8)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-08T23:51:10.974+09:00  WARN 6367 --- [RMI TCP Connection(8)-127.0.0.1] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026-06-08T23:51:10.977+09:00  INFO 6367 --- [RMI TCP Connection(8)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-08T23:51:10.984+09:00  INFO 6367 --- [RMI TCP Connection(8)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
