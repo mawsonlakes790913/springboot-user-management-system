@@ -856,3 +856,469 @@
 2026/06/09 15:27:59 INFO  [restartedMain] - Starting ProtocolHandler ["http-nio-8080"]
 2026/06/09 15:27:59 INFO  [restartedMain] - Tomcat started on port 8080 (http) with context path '/'
 2026/06/09 15:27:59 INFO  [restartedMain] - Started UserManagementSystemApplication in 10.09 seconds (process running for 10.906)
+2026/06/09 15:39:10 INFO  [File Watcher] - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026/06/09 15:39:10 INFO  [Thread-5] - Commencing graceful shutdown. Waiting for active requests to complete
+2026/06/09 15:39:10 INFO  [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:10 INFO  [tomcat-shutdown] - Graceful shutdown complete
+2026/06/09 15:39:10 INFO  [Thread-5] - Stopping ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:10 INFO  [Thread-5] - SampleComponent2 preDestroy
+2026/06/09 15:39:10 INFO  [Thread-5] - SampleComponent1 preDestroy
+2026/06/09 15:39:10 INFO  [Thread-5] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:39:10 WARN  [Thread-5] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 15:39:10 INFO  [Thread-5] - HikariPool-1 - Shutdown initiated...
+2026/06/09 15:39:10 INFO  [Thread-5] - HikariPool-1 - Shutdown completed.
+2026/06/09 15:39:12 INFO  [restartedMain] - Starting UserManagementSystemApplication using Java 17.0.10 with PID 2717 (/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes started by naoki in /Users/naoki/GitHub/springboot-user-management-system/user-management-system)
+2026/06/09 15:39:12 DEBUG [restartedMain] - Running with Spring Boot v3.5.11, Spring v6.2.16
+2026/06/09 15:39:12 INFO  [restartedMain] - The following 1 profile is active: "local"
+2026/06/09 15:39:12 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:39:12 INFO  [restartedMain] - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2026/06/09 15:39:12 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.hello.SampleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:39:12 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.user.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:39:12 INFO  [restartedMain] - Finished Spring Data repository scanning in 20 ms. Found 0 JDBC repository interfaces.
+2026/06/09 15:39:12 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:39:12 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026/06/09 15:39:12 INFO  [restartedMain] - Finished Spring Data repository scanning in 19 ms. Found 2 JPA repository interfaces.
+2026/06/09 15:39:13 INFO  [restartedMain] - Tomcat initialized with port 8080 (http)
+2026/06/09 15:39:13 INFO  [restartedMain] - Initializing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:13 INFO  [restartedMain] - Starting service [Tomcat]
+2026/06/09 15:39:13 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026/06/09 15:39:13 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2026/06/09 15:39:13 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 1680 ms
+2026/06/09 15:39:14 INFO  [restartedMain] - HikariPool-2 - Starting...
+2026/06/09 15:39:14 INFO  [restartedMain] - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
+2026/06/09 15:39:14 INFO  [restartedMain] - HikariPool-2 - Start completed.
+2026/06/09 15:39:14 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026/06/09 15:39:14 INFO  [restartedMain] - HHH000026: Second-level cache disabled
+2026/06/09 15:39:14 INFO  [restartedMain] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026/06/09 15:39:14 INFO  [restartedMain] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026/06/09 15:39:14 INFO  [restartedMain] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026/06/09 15:39:14 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:39:14 INFO  [restartedMain] - applicationName=sample-local test=LOCAL
+2026/06/09 15:39:14 INFO  [restartedMain] - SampleComponent1 init
+2026/06/09 15:39:14 INFO  [restartedMain] - SampleComponent2 init
+2026/06/09 15:39:15 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026/06/09 15:39:16 INFO  [restartedMain] - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026/06/09 15:39:17 INFO  [restartedMain] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026/06/09 15:39:17 INFO  [restartedMain] - LiveReload server is running on port 35729
+2026/06/09 15:39:17 INFO  [restartedMain] - Starting ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:17 INFO  [restartedMain] - Tomcat started on port 8080 (http) with context path '/'
+2026/06/09 15:39:17 INFO  [restartedMain] - Started UserManagementSystemApplication in 5.596 seconds (process running for 689.116)
+2026/06/09 15:39:17 INFO  [restartedMain] - Condition evaluation unchanged
+2026/06/09 15:39:23 INFO  [File Watcher] - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026/06/09 15:39:23 INFO  [Thread-7] - Commencing graceful shutdown. Waiting for active requests to complete
+2026/06/09 15:39:23 INFO  [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:23 INFO  [tomcat-shutdown] - Graceful shutdown complete
+2026/06/09 15:39:23 INFO  [Thread-7] - Stopping ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:23 INFO  [Thread-7] - SampleComponent2 preDestroy
+2026/06/09 15:39:23 INFO  [Thread-7] - SampleComponent1 preDestroy
+2026/06/09 15:39:23 INFO  [Thread-7] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:39:23 WARN  [Thread-7] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 15:39:23 INFO  [Thread-7] - HikariPool-2 - Shutdown initiated...
+2026/06/09 15:39:23 INFO  [Thread-7] - HikariPool-2 - Shutdown completed.
+2026/06/09 15:39:23 INFO  [restartedMain] - Starting UserManagementSystemApplication using Java 17.0.10 with PID 2717 (/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes started by naoki in /Users/naoki/GitHub/springboot-user-management-system/user-management-system)
+2026/06/09 15:39:23 DEBUG [restartedMain] - Running with Spring Boot v3.5.11, Spring v6.2.16
+2026/06/09 15:39:23 INFO  [restartedMain] - The following 1 profile is active: "local"
+2026/06/09 15:39:23 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:39:23 INFO  [restartedMain] - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2026/06/09 15:39:23 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.hello.SampleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:39:23 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.user.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:39:23 INFO  [restartedMain] - Finished Spring Data repository scanning in 12 ms. Found 0 JDBC repository interfaces.
+2026/06/09 15:39:23 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:39:23 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026/06/09 15:39:23 INFO  [restartedMain] - Finished Spring Data repository scanning in 12 ms. Found 2 JPA repository interfaces.
+2026/06/09 15:39:24 INFO  [restartedMain] - Tomcat initialized with port 8080 (http)
+2026/06/09 15:39:24 INFO  [restartedMain] - Initializing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:24 INFO  [restartedMain] - Starting service [Tomcat]
+2026/06/09 15:39:24 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026/06/09 15:39:24 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2026/06/09 15:39:24 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 1007 ms
+2026/06/09 15:39:24 INFO  [restartedMain] - HikariPool-3 - Starting...
+2026/06/09 15:39:24 INFO  [restartedMain] - HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:testdb user=SA
+2026/06/09 15:39:24 INFO  [restartedMain] - HikariPool-3 - Start completed.
+2026/06/09 15:39:24 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026/06/09 15:39:24 INFO  [restartedMain] - HHH000026: Second-level cache disabled
+2026/06/09 15:39:24 INFO  [restartedMain] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026/06/09 15:39:24 INFO  [restartedMain] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026/06/09 15:39:24 INFO  [restartedMain] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026/06/09 15:39:24 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:39:24 INFO  [restartedMain] - applicationName=sample-local test=LOCAL
+2026/06/09 15:39:24 INFO  [restartedMain] - SampleComponent1 init
+2026/06/09 15:39:24 INFO  [restartedMain] - SampleComponent2 init
+2026/06/09 15:39:24 WARN  [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'signupController' defined in file [/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes/com/example/demo/user/controller/SignupController.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'com.example.demo.user.domain.service.UserService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2026/06/09 15:39:24 INFO  [restartedMain] - SampleComponent2 preDestroy
+2026/06/09 15:39:24 INFO  [restartedMain] - SampleComponent1 preDestroy
+2026/06/09 15:39:24 INFO  [restartedMain] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:39:24 WARN  [restartedMain] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 15:39:24 INFO  [restartedMain] - HikariPool-3 - Shutdown initiated...
+2026/06/09 15:39:24 INFO  [restartedMain] - HikariPool-3 - Shutdown completed.
+2026/06/09 15:39:24 INFO  [restartedMain] - Stopping service [Tomcat]
+2026/06/09 15:39:24 INFO  [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026/06/09 15:39:25 ERROR [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.example.demo.user.controller.SignupController required a bean of type 'com.example.demo.user.domain.service.UserService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.example.demo.user.domain.service.UserService' in your configuration.
+
+2026/06/09 15:39:48 INFO  [restartedMain] - Starting UserManagementSystemApplication using Java 17.0.10 with PID 2717 (/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes started by naoki in /Users/naoki/GitHub/springboot-user-management-system/user-management-system)
+2026/06/09 15:39:48 DEBUG [restartedMain] - Running with Spring Boot v3.5.11, Spring v6.2.16
+2026/06/09 15:39:48 INFO  [restartedMain] - The following 1 profile is active: "local"
+2026/06/09 15:39:49 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:39:49 INFO  [restartedMain] - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2026/06/09 15:39:49 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.hello.SampleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:39:49 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.user.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:39:49 INFO  [restartedMain] - Finished Spring Data repository scanning in 11 ms. Found 0 JDBC repository interfaces.
+2026/06/09 15:39:49 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:39:49 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026/06/09 15:39:49 INFO  [restartedMain] - Finished Spring Data repository scanning in 10 ms. Found 2 JPA repository interfaces.
+2026/06/09 15:39:49 INFO  [restartedMain] - Tomcat initialized with port 8080 (http)
+2026/06/09 15:39:49 INFO  [restartedMain] - Initializing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:49 INFO  [restartedMain] - Starting service [Tomcat]
+2026/06/09 15:39:49 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026/06/09 15:39:49 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2026/06/09 15:39:49 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 1008 ms
+2026/06/09 15:39:50 INFO  [restartedMain] - HikariPool-4 - Starting...
+2026/06/09 15:39:50 INFO  [restartedMain] - HikariPool-4 - Added connection conn30: url=jdbc:h2:mem:testdb user=SA
+2026/06/09 15:39:50 INFO  [restartedMain] - HikariPool-4 - Start completed.
+2026/06/09 15:39:50 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026/06/09 15:39:50 INFO  [restartedMain] - HHH000026: Second-level cache disabled
+2026/06/09 15:39:50 INFO  [restartedMain] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026/06/09 15:39:50 INFO  [restartedMain] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-4)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026/06/09 15:39:50 INFO  [restartedMain] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026/06/09 15:39:50 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:39:50 INFO  [restartedMain] - applicationName=sample-local test=LOCAL
+2026/06/09 15:39:50 INFO  [restartedMain] - SampleComponent1 init
+2026/06/09 15:39:50 INFO  [restartedMain] - SampleComponent2 init
+2026/06/09 15:39:51 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026/06/09 15:39:52 INFO  [restartedMain] - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026/06/09 15:39:54 INFO  [restartedMain] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026/06/09 15:39:54 INFO  [restartedMain] - LiveReload server is running on port 35729
+2026/06/09 15:39:54 INFO  [restartedMain] - Starting ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:39:54 INFO  [restartedMain] - Tomcat started on port 8080 (http) with context path '/'
+2026/06/09 15:39:54 INFO  [restartedMain] - Started UserManagementSystemApplication in 5.599 seconds (process running for 726.021)
+2026/06/09 15:39:54 INFO  [restartedMain] - Condition evaluation unchanged
+2026/06/09 15:40:05 INFO  [File Watcher] - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2026/06/09 15:40:05 INFO  [Thread-12] - Commencing graceful shutdown. Waiting for active requests to complete
+2026/06/09 15:40:05 INFO  [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:40:05 INFO  [tomcat-shutdown] - Graceful shutdown complete
+2026/06/09 15:40:05 INFO  [Thread-12] - Stopping ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:40:05 INFO  [Thread-12] - SampleComponent2 preDestroy
+2026/06/09 15:40:05 INFO  [Thread-12] - SampleComponent1 preDestroy
+2026/06/09 15:40:05 INFO  [Thread-12] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:40:05 WARN  [Thread-12] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 15:40:05 INFO  [Thread-12] - HikariPool-4 - Shutdown initiated...
+2026/06/09 15:40:05 INFO  [Thread-12] - HikariPool-4 - Shutdown completed.
+2026/06/09 15:40:05 INFO  [restartedMain] - Starting UserManagementSystemApplication using Java 17.0.10 with PID 2717 (/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes started by naoki in /Users/naoki/GitHub/springboot-user-management-system/user-management-system)
+2026/06/09 15:40:05 DEBUG [restartedMain] - Running with Spring Boot v3.5.11, Spring v6.2.16
+2026/06/09 15:40:05 INFO  [restartedMain] - The following 1 profile is active: "local"
+2026/06/09 15:40:06 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:40:06 INFO  [restartedMain] - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2026/06/09 15:40:06 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.hello.SampleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:40:06 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.user.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:40:06 INFO  [restartedMain] - Finished Spring Data repository scanning in 22 ms. Found 0 JDBC repository interfaces.
+2026/06/09 15:40:06 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:40:06 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026/06/09 15:40:06 INFO  [restartedMain] - Finished Spring Data repository scanning in 22 ms. Found 2 JPA repository interfaces.
+2026/06/09 15:40:06 INFO  [restartedMain] - Tomcat initialized with port 8080 (http)
+2026/06/09 15:40:06 INFO  [restartedMain] - Initializing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:40:06 INFO  [restartedMain] - Starting service [Tomcat]
+2026/06/09 15:40:06 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026/06/09 15:40:06 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2026/06/09 15:40:06 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 1387 ms
+2026/06/09 15:40:07 INFO  [restartedMain] - HikariPool-5 - Starting...
+2026/06/09 15:40:07 INFO  [restartedMain] - HikariPool-5 - Added connection conn40: url=jdbc:h2:mem:testdb user=SA
+2026/06/09 15:40:07 INFO  [restartedMain] - HikariPool-5 - Start completed.
+2026/06/09 15:40:07 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026/06/09 15:40:07 INFO  [restartedMain] - HHH000026: Second-level cache disabled
+2026/06/09 15:40:07 INFO  [restartedMain] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026/06/09 15:40:07 INFO  [restartedMain] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-5)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026/06/09 15:40:07 INFO  [restartedMain] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026/06/09 15:40:07 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:40:07 INFO  [restartedMain] - applicationName=sample-local test=LOCAL
+2026/06/09 15:40:07 INFO  [restartedMain] - SampleComponent1 init
+2026/06/09 15:40:07 INFO  [restartedMain] - SampleComponent2 init
+2026/06/09 15:40:08 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026/06/09 15:40:09 INFO  [restartedMain] - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026/06/09 15:40:10 INFO  [restartedMain] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026/06/09 15:40:10 INFO  [restartedMain] - LiveReload server is running on port 35729
+2026/06/09 15:40:10 INFO  [restartedMain] - Starting ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:40:10 INFO  [restartedMain] - Tomcat started on port 8080 (http) with context path '/'
+2026/06/09 15:40:10 INFO  [restartedMain] - Started UserManagementSystemApplication in 5.043 seconds (process running for 742.056)
+2026/06/09 15:40:10 INFO  [restartedMain] - Condition evaluation unchanged
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - Application shutdown requested.
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - Commencing graceful shutdown. Waiting for active requests to complete
+2026/06/09 15:41:39 INFO  [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:41:39 INFO  [tomcat-shutdown] - Graceful shutdown complete
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - Stopping ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - SampleComponent2 preDestroy
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - SampleComponent1 preDestroy
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:41:39 WARN  [RMI TCP Connection(18)-127.0.0.1] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - HikariPool-5 - Shutdown initiated...
+2026/06/09 15:41:39 INFO  [RMI TCP Connection(18)-127.0.0.1] - HikariPool-5 - Shutdown completed.
+2026/06/09 15:41:57 INFO  [background-preinit] - HV000001: Hibernate Validator 8.0.3.Final
+2026/06/09 15:41:57 INFO  [restartedMain] - Starting UserManagementSystemApplication using Java 17.0.10 with PID 3058 (/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes started by naoki in /Users/naoki/GitHub/springboot-user-management-system/user-management-system)
+2026/06/09 15:41:57 DEBUG [restartedMain] - Running with Spring Boot v3.5.11, Spring v6.2.16
+2026/06/09 15:41:57 INFO  [restartedMain] - The following 1 profile is active: "local"
+2026/06/09 15:41:59 INFO  [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026/06/09 15:41:59 INFO  [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026/06/09 15:42:02 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:42:02 INFO  [restartedMain] - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2026/06/09 15:42:02 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.hello.SampleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:42:02 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.user.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:42:02 INFO  [restartedMain] - Finished Spring Data repository scanning in 82 ms. Found 0 JDBC repository interfaces.
+2026/06/09 15:42:02 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:42:02 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026/06/09 15:42:02 INFO  [restartedMain] - Finished Spring Data repository scanning in 53 ms. Found 2 JPA repository interfaces.
+2026/06/09 15:42:04 INFO  [restartedMain] - Tomcat initialized with port 8080 (http)
+2026/06/09 15:42:04 INFO  [restartedMain] - Initializing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:42:04 INFO  [restartedMain] - Starting service [Tomcat]
+2026/06/09 15:42:04 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026/06/09 15:42:04 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2026/06/09 15:42:04 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 5469 ms
+2026/06/09 15:42:04 INFO  [restartedMain] - HikariPool-1 - Starting...
+2026/06/09 15:42:05 INFO  [restartedMain] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026/06/09 15:42:05 INFO  [restartedMain] - HikariPool-1 - Start completed.
+2026/06/09 15:42:05 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026/06/09 15:42:06 INFO  [restartedMain] - HHH000412: Hibernate ORM core version 6.6.42.Final
+2026/06/09 15:42:06 INFO  [restartedMain] - HHH000026: Second-level cache disabled
+2026/06/09 15:42:07 INFO  [restartedMain] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026/06/09 15:42:07 INFO  [restartedMain] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026/06/09 15:42:10 INFO  [restartedMain] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026/06/09 15:42:10 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:42:10 INFO  [restartedMain] - applicationName=sample-local test=LOCAL
+2026/06/09 15:42:10 INFO  [restartedMain] - SampleComponent1 init
+2026/06/09 15:42:10 INFO  [restartedMain] - SampleComponent2 init
+2026/06/09 15:42:11 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026/06/09 15:42:12 INFO  [restartedMain] - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026/06/09 15:42:13 INFO  [restartedMain] - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026/06/09 15:42:14 INFO  [restartedMain] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026/06/09 15:42:14 INFO  [restartedMain] - LiveReload server is running on port 35729
+2026/06/09 15:42:14 INFO  [restartedMain] - Starting ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:42:14 INFO  [restartedMain] - Tomcat started on port 8080 (http) with context path '/'
+2026/06/09 15:42:14 INFO  [restartedMain] - Started UserManagementSystemApplication in 18.784 seconds (process running for 21.467)
+2026/06/09 15:42:18 INFO  [http-nio-8080-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026/06/09 15:42:18 INFO  [http-nio-8080-exec-1] - Initializing Servlet 'dispatcherServlet'
+2026/06/09 15:42:18 INFO  [http-nio-8080-exec-1] - Completed initialization in 2 ms
+2026/06/09 15:42:18 INFO  [http-nio-8080-exec-2] - ユーザーID=anonymousUser, メソッド開始(Controller): String com.example.demo.login.controller.LoginController.getLogin()
+2026/06/09 15:42:18 INFO  [http-nio-8080-exec-2] - ユーザーID=anonymousUser, メソッド終了(Controller): String com.example.demo.login.controller.LoginController.getLogin()
+2026/06/09 15:42:19 WARN  [http-nio-8080-exec-6] - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026/06/09 15:42:38 INFO  [http-nio-8080-exec-7] - メソッド開始: MUser com.example.demo.user.domain.service.impl.UserServiceImpl.getUserOne(String)
+2026/06/09 15:42:38 DEBUG [http-nio-8080-exec-7] - ==>  Preparing: SELECT m_user.user_id , m_user.password , m_user.user_name , m_user.birthday , m_user.age , m_user.gender , m_user.role , m_department.department_id , m_department.department_name , t_salary.user_id AS salary_user_id , t_salary.year_month AS salary_year_month , t_salary.salary AS salary_salary FROM m_user LEFT JOIN m_department ON m_user.department_id = m_department.department_id LEFT JOIN t_salary ON m_user.user_id = t_salary.user_id WHERE m_user.user_id = ?
+2026/06/09 15:42:38 DEBUG [http-nio-8080-exec-7] - ==> Parameters: user1@example.co.jp(String)
+2026/06/09 15:42:38 DEBUG [http-nio-8080-exec-7] - <==      Total: 3
+2026/06/09 15:42:38 INFO  [http-nio-8080-exec-7] - メソッド終了: MUser com.example.demo.user.domain.service.impl.UserServiceImpl.getUserOne(String)
+2026/06/09 15:42:39 INFO  [http-nio-8080-exec-8] - ユーザー名=ユーザー1
+2026/06/09 15:42:39 INFO  [http-nio-8080-exec-8] - ユーザーID=user1@example.co.jp, メソッド開始(Controller): String com.example.demo.user.controller.UserListController.getUserList(Model,UserListForm,Pageable,LoginUser)
+2026/06/09 15:42:39 INFO  [http-nio-8080-exec-8] - ユーザーID=user1@example.co.jp, ユーザー名=ユーザー1
+2026/06/09 15:42:39 INFO  [http-nio-8080-exec-8] - メソッド開始: Page com.example.demo.user.domain.service.impl.UserServiceImpl.getUsers(MUser,Pageable)
+2026/06/09 15:42:39 DEBUG [http-nio-8080-exec-8] - ==>  Preparing: SELECT * FROM m_user LIMIT ? OFFSET ?
+2026/06/09 15:42:39 DEBUG [http-nio-8080-exec-8] - ==> Parameters: 3(Integer), 0(Long)
+2026/06/09 15:42:39 DEBUG [http-nio-8080-exec-8] - <==      Total: 3
+2026/06/09 15:42:39 DEBUG [http-nio-8080-exec-8] - ==>  Preparing: SELECT count(*) FROM m_user
+2026/06/09 15:42:39 DEBUG [http-nio-8080-exec-8] - ==> Parameters: 
+2026/06/09 15:42:39 DEBUG [http-nio-8080-exec-8] - <==      Total: 1
+2026/06/09 15:42:39 INFO  [http-nio-8080-exec-8] - メソッド終了: Page com.example.demo.user.domain.service.impl.UserServiceImpl.getUsers(MUser,Pageable)
+2026/06/09 15:42:39 INFO  [http-nio-8080-exec-8] - ユーザーID=user1@example.co.jp, メソッド終了(Controller): String com.example.demo.user.controller.UserListController.getUserList(Model,UserListForm,Pageable,LoginUser)
+2026/06/09 15:42:41 WARN  [http-nio-8080-exec-3] - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - Application shutdown requested.
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - Commencing graceful shutdown. Waiting for active requests to complete
+2026/06/09 15:43:46 INFO  [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:43:46 INFO  [tomcat-shutdown] - Graceful shutdown complete
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - Stopping ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - SampleComponent2 preDestroy
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - SampleComponent1 preDestroy
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:43:46 WARN  [RMI TCP Connection(5)-127.0.0.1] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - HikariPool-1 - Shutdown initiated...
+2026/06/09 15:43:46 INFO  [RMI TCP Connection(5)-127.0.0.1] - HikariPool-1 - Shutdown completed.
+2026/06/09 15:44:08 INFO  [background-preinit] - HV000001: Hibernate Validator 8.0.3.Final
+2026/06/09 15:44:08 INFO  [restartedMain] - Starting UserManagementSystemApplication using Java 17.0.10 with PID 3098 (/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes started by naoki in /Users/naoki/GitHub/springboot-user-management-system/user-management-system)
+2026/06/09 15:44:08 DEBUG [restartedMain] - Running with Spring Boot v3.5.11, Spring v6.2.16
+2026/06/09 15:44:08 INFO  [restartedMain] - The following 1 profile is active: "dev"
+2026/06/09 15:44:08 INFO  [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026/06/09 15:44:08 INFO  [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026/06/09 15:44:10 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:44:10 INFO  [restartedMain] - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2026/06/09 15:44:10 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.hello.SampleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:44:10 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.user.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 15:44:10 INFO  [restartedMain] - Finished Spring Data repository scanning in 33 ms. Found 0 JDBC repository interfaces.
+2026/06/09 15:44:10 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 15:44:10 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026/06/09 15:44:10 INFO  [restartedMain] - Finished Spring Data repository scanning in 38 ms. Found 2 JPA repository interfaces.
+2026/06/09 15:44:11 INFO  [restartedMain] - Tomcat initialized with port 8080 (http)
+2026/06/09 15:44:11 INFO  [restartedMain] - Initializing ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:44:11 INFO  [restartedMain] - Starting service [Tomcat]
+2026/06/09 15:44:11 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026/06/09 15:44:11 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2026/06/09 15:44:11 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 2467 ms
+2026/06/09 15:44:11 INFO  [restartedMain] - HikariPool-1 - Starting...
+2026/06/09 15:44:11 INFO  [restartedMain] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026/06/09 15:44:11 INFO  [restartedMain] - HikariPool-1 - Start completed.
+2026/06/09 15:44:12 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026/06/09 15:44:12 INFO  [restartedMain] - HHH000412: Hibernate ORM core version 6.6.42.Final
+2026/06/09 15:44:12 INFO  [restartedMain] - HHH000026: Second-level cache disabled
+2026/06/09 15:44:13 INFO  [restartedMain] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026/06/09 15:44:13 INFO  [restartedMain] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026/06/09 15:44:14 INFO  [restartedMain] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026/06/09 15:44:14 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 15:44:14 INFO  [restartedMain] - applicationName=sample-dev test=dev
+2026/06/09 15:44:14 INFO  [restartedMain] - SampleComponent1 init
+2026/06/09 15:44:14 INFO  [restartedMain] - SampleComponent2 init
+2026/06/09 15:44:15 INFO  [restartedMain] - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026/06/09 15:44:16 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026/06/09 15:44:18 INFO  [restartedMain] - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026/06/09 15:44:19 INFO  [restartedMain] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026/06/09 15:44:19 INFO  [restartedMain] - LiveReload server is running on port 35729
+2026/06/09 15:44:19 INFO  [restartedMain] - Starting ProtocolHandler ["http-nio-8080"]
+2026/06/09 15:44:19 INFO  [restartedMain] - Tomcat started on port 8080 (http) with context path '/'
+2026/06/09 15:44:19 INFO  [restartedMain] - Started UserManagementSystemApplication in 11.892 seconds (process running for 13.002)
+2026/06/09 15:44:40 INFO  [http-nio-8080-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026/06/09 15:44:40 INFO  [http-nio-8080-exec-1] - Initializing Servlet 'dispatcherServlet'
+2026/06/09 15:44:40 INFO  [http-nio-8080-exec-1] - Completed initialization in 4 ms
+2026/06/09 15:44:41 WARN  [http-nio-8080-exec-2] - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026/06/09 15:44:42 INFO  [http-nio-8080-exec-4] - ユーザーID=anonymousUser, メソッド開始(Controller): String com.example.demo.login.controller.LoginController.getLogin()
+2026/06/09 15:44:42 INFO  [http-nio-8080-exec-4] - ユーザーID=anonymousUser, メソッド終了(Controller): String com.example.demo.login.controller.LoginController.getLogin()
+2026/06/09 15:44:42 WARN  [http-nio-8080-exec-8] - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026/06/09 15:44:59 INFO  [http-nio-8080-exec-9] - メソッド開始: MUser com.example.demo.user.domain.service.impl.UserServiceImpl2.getUserOne(String)
+2026/06/09 15:44:59 DEBUG [http-nio-8080-exec-9] - select m1_0.user_id,m1_0.age,m1_0.birthday,d1_0.department_id,d1_0.department_name,m1_0.department_id,m1_0.gender,m1_0.password,m1_0.role,m1_0.user_name from m_user m1_0 left join m_department d1_0 on d1_0.department_id=m1_0.department_id where m1_0.user_id=?
+2026/06/09 15:44:59 INFO  [http-nio-8080-exec-9] - メソッド終了: MUser com.example.demo.user.domain.service.impl.UserServiceImpl2.getUserOne(String)
+2026/06/09 15:44:59 INFO  [http-nio-8080-exec-10] - ユーザーID=anonymousUser, メソッド開始(Controller): String com.example.demo.login.controller.LoginController.getLogin()
+2026/06/09 15:44:59 INFO  [http-nio-8080-exec-10] - ユーザーID=anonymousUser, メソッド終了(Controller): String com.example.demo.login.controller.LoginController.getLogin()
+2026/06/09 15:44:59 WARN  [http-nio-8080-exec-4] - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026/06/09 15:45:12 INFO  [http-nio-8080-exec-5] - メソッド開始: MUser com.example.demo.user.domain.service.impl.UserServiceImpl2.getUserOne(String)
+2026/06/09 15:45:12 DEBUG [http-nio-8080-exec-5] - select m1_0.user_id,m1_0.age,m1_0.birthday,d1_0.department_id,d1_0.department_name,m1_0.department_id,m1_0.gender,m1_0.password,m1_0.role,m1_0.user_name from m_user m1_0 left join m_department d1_0 on d1_0.department_id=m1_0.department_id where m1_0.user_id=?
+2026/06/09 15:45:12 INFO  [http-nio-8080-exec-5] - メソッド終了: MUser com.example.demo.user.domain.service.impl.UserServiceImpl2.getUserOne(String)
+2026/06/09 15:45:13 INFO  [http-nio-8080-exec-7] - ユーザー名=ユーザー1
+2026/06/09 15:45:13 INFO  [http-nio-8080-exec-7] - ユーザーID=user1@example.co.jp, メソッド開始(Controller): String com.example.demo.user.controller.UserListController.getUserList(Model,UserListForm,Pageable,LoginUser)
+2026/06/09 15:45:13 INFO  [http-nio-8080-exec-7] - ユーザーID=user1@example.co.jp, ユーザー名=ユーザー1
+2026/06/09 15:45:13 INFO  [http-nio-8080-exec-7] - メソッド開始: Page com.example.demo.user.domain.service.impl.UserServiceImpl2.getUsers(MUser,Pageable)
+2026/06/09 15:45:13 DEBUG [http-nio-8080-exec-7] - select m1_0.user_id,m1_0.age,m1_0.birthday,m1_0.department_id,m1_0.gender,m1_0.password,m1_0.role,m1_0.user_name from m_user m1_0 offset ? rows fetch first ? rows only
+2026/06/09 15:45:13 DEBUG [http-nio-8080-exec-7] - select d1_0.department_id,d1_0.department_name from m_department d1_0 where d1_0.department_id=?
+2026/06/09 15:45:13 DEBUG [http-nio-8080-exec-7] - select d1_0.department_id,d1_0.department_name from m_department d1_0 where d1_0.department_id=?
+2026/06/09 15:45:13 DEBUG [http-nio-8080-exec-7] - select count(m1_0.user_id) from m_user m1_0
+2026/06/09 15:45:13 INFO  [http-nio-8080-exec-7] - メソッド終了: Page com.example.demo.user.domain.service.impl.UserServiceImpl2.getUsers(MUser,Pageable)
+2026/06/09 15:45:13 INFO  [http-nio-8080-exec-7] - ユーザーID=user1@example.co.jp, メソッド終了(Controller): String com.example.demo.user.controller.UserListController.getUserList(Model,UserListForm,Pageable,LoginUser)
+2026/06/09 15:45:14 WARN  [http-nio-8080-exec-2] - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026/06/09 16:05:57 INFO  [File Watcher] - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026/06/09 16:05:57 INFO  [Thread-5] - Commencing graceful shutdown. Waiting for active requests to complete
+2026/06/09 16:05:57 INFO  [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-8080"]
+2026/06/09 16:05:57 INFO  [tomcat-shutdown] - Graceful shutdown complete
+2026/06/09 16:05:57 INFO  [Thread-5] - Stopping ProtocolHandler ["http-nio-8080"]
+2026/06/09 16:05:57 INFO  [Thread-5] - SampleComponent2 preDestroy
+2026/06/09 16:05:57 INFO  [Thread-5] - SampleComponent1 preDestroy
+2026/06/09 16:05:57 INFO  [Thread-5] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 16:05:57 WARN  [Thread-5] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 16:05:57 INFO  [Thread-5] - HikariPool-1 - Shutdown initiated...
+2026/06/09 16:05:58 INFO  [Thread-5] - HikariPool-1 - Shutdown completed.
+2026/06/09 16:09:07 INFO  [background-preinit] - HV000001: Hibernate Validator 8.0.3.Final
+2026/06/09 16:09:07 INFO  [restartedMain] - Starting UserManagementSystemApplication using Java 17.0.10 with PID 3506 (/Users/naoki/GitHub/springboot-user-management-system/user-management-system/target/classes started by naoki in /Users/naoki/GitHub/springboot-user-management-system/user-management-system)
+2026/06/09 16:09:07 DEBUG [restartedMain] - Running with Spring Boot v3.5.11, Spring v6.2.16
+2026/06/09 16:09:07 INFO  [restartedMain] - The following 1 profile is active: "local"
+2026/06/09 16:09:08 INFO  [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026/06/09 16:09:08 INFO  [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026/06/09 16:09:09 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 16:09:09 INFO  [restartedMain] - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2026/06/09 16:09:09 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.hello.SampleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 16:09:09 INFO  [restartedMain] - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.user.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2026/06/09 16:09:09 INFO  [restartedMain] - Finished Spring Data repository scanning in 39 ms. Found 0 JDBC repository interfaces.
+2026/06/09 16:09:09 INFO  [restartedMain] - Multiple Spring Data modules found, entering strict repository configuration mode
+2026/06/09 16:09:09 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026/06/09 16:09:09 INFO  [restartedMain] - Finished Spring Data repository scanning in 53 ms. Found 2 JPA repository interfaces.
+2026/06/09 16:09:11 INFO  [restartedMain] - Tomcat initialized with port 8080 (http)
+2026/06/09 16:09:11 INFO  [restartedMain] - Initializing ProtocolHandler ["http-nio-8080"]
+2026/06/09 16:09:11 INFO  [restartedMain] - Starting service [Tomcat]
+2026/06/09 16:09:11 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026/06/09 16:09:11 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2026/06/09 16:09:11 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 2816 ms
+2026/06/09 16:09:11 INFO  [restartedMain] - HikariPool-1 - Starting...
+2026/06/09 16:09:11 INFO  [restartedMain] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026/06/09 16:09:11 INFO  [restartedMain] - HikariPool-1 - Start completed.
+2026/06/09 16:09:12 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026/06/09 16:09:12 INFO  [restartedMain] - HHH000412: Hibernate ORM core version 6.6.42.Final
+2026/06/09 16:09:12 INFO  [restartedMain] - HHH000026: Second-level cache disabled
+2026/06/09 16:09:12 INFO  [restartedMain] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026/06/09 16:09:12 INFO  [restartedMain] - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026/06/09 16:09:14 INFO  [restartedMain] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026/06/09 16:09:14 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 16:09:14 INFO  [restartedMain] - applicationName=sample-local test=local
+2026/06/09 16:09:14 INFO  [restartedMain] - SampleComponent1 init
+2026/06/09 16:09:14 INFO  [restartedMain] - SampleComponent2 init
+2026/06/09 16:09:15 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026/06/09 16:09:16 INFO  [restartedMain] - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026/06/09 16:09:18 INFO  [restartedMain] - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026/06/09 16:09:18 INFO  [restartedMain] - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026/06/09 16:09:18 INFO  [restartedMain] - LiveReload server is running on port 35729
+2026/06/09 16:09:18 INFO  [restartedMain] - Starting ProtocolHandler ["http-nio-8080"]
+2026/06/09 16:09:18 INFO  [restartedMain] - Tomcat started on port 8080 (http) with context path '/'
+2026/06/09 16:09:18 INFO  [restartedMain] - Started UserManagementSystemApplication in 11.982 seconds (process running for 14.019)
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - Application shutdown requested.
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - Commencing graceful shutdown. Waiting for active requests to complete
+2026/06/09 16:09:41 INFO  [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-8080"]
+2026/06/09 16:09:41 INFO  [tomcat-shutdown] - Graceful shutdown complete
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - Stopping ProtocolHandler ["http-nio-8080"]
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - SampleComponent2 preDestroy
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - SampleComponent1 preDestroy
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026/06/09 16:09:41 WARN  [RMI TCP Connection(4)-127.0.0.1] - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - HikariPool-1 - Shutdown initiated...
+2026/06/09 16:09:41 INFO  [RMI TCP Connection(4)-127.0.0.1] - HikariPool-1 - Shutdown completed.

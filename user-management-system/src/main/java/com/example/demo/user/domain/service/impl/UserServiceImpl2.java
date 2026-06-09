@@ -2,14 +2,12 @@ package com.example.demo.user.domain.service.impl;
 
 import java.util.Optional;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.user.domain.model.MUser;
@@ -19,10 +17,10 @@ import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
+// @Service
 @RequiredArgsConstructor
 @Slf4j
-@Primary
+// @Primary
 public class UserServiceImpl2 implements UserService {
 
     private final UserRepository repository;
