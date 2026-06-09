@@ -1487,3 +1487,4 @@ Consider defining a bean of type 'com.example.demo.user.domain.service.UserServi
 2026/06/09 16:18:25 INFO  [http-nio-8080-exec-4] - メソッド終了: MUser com.example.demo.user.domain.service.impl.UserServiceImpl.getUserOne(String)
 2026/06/09 16:18:25 INFO  [http-nio-8080-exec-4] - ユーザーID=user1@example.co.jp, メソッド終了(Controller): String com.example.demo.user.controller.UserDetailController.getUser(UserDetailForm,Model,String)
 2026/06/09 16:18:25 WARN  [http-nio-8080-exec-7] - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026/06/09 16:47:53 WARN  [HikariPool-1:housekeeper] - HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s861ms), soft-evicting connections from pool.
