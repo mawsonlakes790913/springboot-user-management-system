@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: sample-dev
+
+sample:
+  test: ${SAMPLE_TEST:dev}
